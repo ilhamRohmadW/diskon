@@ -1,4 +1,5 @@
 <script setup>
+//component
 import HeaderC from './components/Header.vue'
 import FooterC from './components/Footer.vue'
 import TitleC from './components/Title.vue'
@@ -9,6 +10,8 @@ import HeroSwiper from './components/HeroSwiper.vue'
 import ProductSwiper from './components/ProductSwiper.vue'
 import ProductList from './components/ProductList.vue'
 import Marquee from './components/Marquee.vue'
+
+//image
 import LogoLip6 from './assets/image/logo-lip6.png'
 import LogoFimela from './assets/image/logo-fimela.png'
 import LogoKL from './assets/image/logo-kl.png'
@@ -23,7 +26,6 @@ import PartnerOtosia from './assets/image/partner-otosia.png'
 import PartnerBolanet from './assets/image/partner-bolanet.png'
 import PartnerCompas from './assets/image/partner-compas.png'
 import PartnerFimela from './assets/image/partner-fimela.png'
-
 </script>
 
 <template>
@@ -88,7 +90,7 @@ import PartnerFimela from './assets/image/partner-fimela.png'
                 <VideoList/>
             </div>
         </section>
-        <section class="section section--product bg-[#FFE9C8] py-16 border-y">
+        <section class="section section--product bg-[#FFE9C8] py-16">
             <div class="container">
                 <TitleC 
                 title="Rekomendasi"
@@ -112,7 +114,7 @@ import PartnerFimela from './assets/image/partner-fimela.png'
 
             </div>
         </section>
-        <section class="section section--partner pb-14">
+        <section class="section section--partner pb-14 border-t-0">
             <div class="container">
                 <TitleC 
                 title="Official Partner"

@@ -192,5 +192,25 @@ window.addEventListener("load", () => {
 
     productDesc.controller.control = productImage;
     productImage.controller.control = productDesc;
+
+    // video
+    let videoTab = document.querySelector('.section--video-box');
+    if (videoTab) {
+        const mainImg = videoTab.querySelector('.section--video-head .vidio-embed');
+        const mainTitle = videoTab.querySelector('.section--video-head .item-title');
+        const items = videoTab.querySelectorAll('.section--video-list > div');
+        
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                // Update main content
+                mainImg.src = item.dataset.src;
+                mainTitle.textContent = item.textContent.trim();
+                
+                // Active state
+                items.forEach(el => el.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    }
 })
 

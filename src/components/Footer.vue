@@ -1,6 +1,5 @@
 <script setup>
     import Logo from '../assets/image/logo.png';
-    import Date from '../assets/image/date.png';
 </script>
 <template>
     <footer class="footer bg-[#1C1C1E] text-white">
@@ -9,7 +8,7 @@
                 <div class="footer-top flex flex-col gap-3">
                     <a href="#" class="header-logo flex items-end justify-center mb-2.5">
                         <img class="header-logo-image" :src="Logo" width="213" height="78" alt="logo">
-                        <img class="header-logo-date" :src="Date" width="31" height="38" alt="logo">
+                        <!-- <img class="header-logo-date" :src="Date" width="31" height="38" alt="logo"> -->
                     </a>
                     <p class="footer-desc text-center">Hadir buat kamu yang doyan cari diskon kece! Dari produk hits, artikel seru, sampai daily deals yang sayang dilewatin - semua ada di sini!</p>
                 </div>

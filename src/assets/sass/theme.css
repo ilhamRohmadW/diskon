@@ -15,7 +15,7 @@
     @apply relative max-w-screen-lg! mx-auto px-6 {}
   }
   .section {
-    @apply relative {}
+    @apply relative border-t-2 {}
   }
   .item__figure {
     @apply relative rounded-lg overflow-hidden mb-2.5 lg:mb-4 {}

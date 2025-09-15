@@ -1,15 +1,19 @@
 <script setup>
     import Logo from '../assets/image/logo.png';
-    import Date from '../assets/image/date.png';
+    import LogoPowered from '../assets/image/logo-powered.png';
 </script>
 <template>
-    <header class="header bg-primary py-4 inset-x-0 z-20 sticky top-0 transition-transform shadow-md duration-500">
+    <header class="header bg-third pt-2.5 pb-5 inset-x-0 z-20 sticky top-0 transition-transform duration-500">
         <div class="container">
             <div class="header-wrapper flex flex-col">
-                <a href="#" class="header-logo flex items-end justify-center mb-2.5">
-                    <img class="header-logo-image" :src="Logo" width="112" height="41" alt="logo">
-                    <img class="header-logo-date" :src="Date" width="16" height="20" alt="logo">
-                </a>
+                <div class="header-logo flex items-center justify-center gap-2.5 mb-2.5">
+                    <a href="#" class="header-logo-item">
+                        <img class="header-logo-image" :src="Logo" width="93" height="52" alt="logo">
+                    </a>
+                    <a href="#" class="header-logo-item py-1 border-l border-white pl-2.5">
+                        <img class="header-logo-image" :src="LogoPowered" width="97" height="26" alt="logo">
+                    </a>
+                </div>
                 <form id="headerSearch" class="header-search bg-white flex items-center justify-between rounded-lg gap-2" role="search" method="get" action="https://www.liputan6.com/search" autocomplete="off">
                     <!-- <input class="header-search-input placeholder:text-neutral-500 py-2 flex-1 outline-none" type="text" value="" name="q" id="q" placeholder="Cari Product...">
                     <div class="w-full max-w-md mx-auto mt-20"> -->
@@ -24,7 +28,7 @@
                                 autocomplete="off"
                                 />
                                 <button class="header-search-button " type="button">
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 14L11.1067 11.1067M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"c/></svg>
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 14L11 11M13 7C13 9.94552 9.94552 13 7 13C4.05448 13 2 9.94552 2 7C2 4.05448 4.05448 2 7 2C9.94552 2 13 4.05448 13 7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </button>
                                 <div
                                 id="dropdown"
