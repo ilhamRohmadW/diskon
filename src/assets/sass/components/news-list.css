@@ -1,8 +1,0 @@
-@reference "tailwindcss" {}@layer components {
-  .news-list {
-    @apply relative grid grid-cols-2 lg:grid-cols-4 -m-2 {}
-  }
-  .news-list .item {
-    @apply block rounded-lg pt-2 px-2 pb-4 {}
-  }
-}

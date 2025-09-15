@@ -1,77 +1,150 @@
-// document.addEventListener('DOMContentLoaded', () => {
-window.addEventListener("load", () => {
+window.addEventListener("load", () => {    
+    const input = document.getElementById('search-input');
+    const dropdown = document.getElementById('dropdown');
+    const resultSection = document.getElementById('result-section');
+    const container = document.getElementById('search-container');
     
-    var checkMode = localStorage.getItem("mode");
+    let allSuggestions = [];
+    let recent = [];
+    let loading = false;
     
-    function setTheme(param) {
-        if(param === 'dark'){
-            document.documentElement.classList.add('dark')
-            document.documentElement.classList.remove('light')
-        } else if (param === 'light'){
-            document.documentElement.classList.add('light')
-            document.documentElement.classList.remove('dark')
+    function showDropdown(show) {
+        dropdown.classList.toggle('hidden', !show);
+    }
+    
+    function setLoading(isLoading) {
+        loading = isLoading;
+        if (isLoading) {
+            dropdown.innerHTML = `
+                <div class="flex justify-center items-center p-4">
+                    <div class="w-6 h-6 border-2 border-t-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                </div>
+            `;
+            showDropdown(true);
         }
     }
-    setTheme(checkMode)
     
-    document.querySelectorAll('.switch-theme').forEach((item)=>{
-        item.addEventListener('click',(e)=>{
-            let value = e.target.dataset.value;
-            if (value == 'dark') {
-                // console.log('dark');
-                e.target.dataset.value = 'light'
-                value = 'light'
-            }else if(value == 'light'){
-                // console.log('light');
-                e.target.dataset.value = 'dark'
-                value = 'dark'
-            }
-            setTheme(value)
-            localStorage.setItem("mode", value);
-            // console.log({checkMode}, value);
-        })
-    })
-    const header = document.querySelector('.header')
-    if (header) {
-        const headerCollapsed = document.querySelector('.header--collapsed')
-        let search = header.querySelector('.header--collapsed__form__input'),
-        searchParent = search.closest('.header--collapsed__form')
-        
-        header.querySelector('.header__menu').addEventListener('click',()=>{
-            headerCollapsed.classList.add('--active')
-            document.documentElement.classList.add('overflow-hidden')
-        })
-        function headerClose() {
-            headerCollapsed.classList.remove('--active')
-            document.documentElement.classList.remove('overflow-hidden')
-            search.value = ''
+    function getFilteredSuggestions(query) {
+        if (!query.trim()) {
+            return recent.length > 0 ? recent.slice(0, 5) : allSuggestions.slice(0, 5);
         }
-        header.querySelector('.header--collapsed__top__close').addEventListener('click',()=>{
-            headerClose()
-        })
-        
-        search.addEventListener('input',(e)=>{
-            if(e.target.value.length > 0){
-                searchParent.classList.add('--active')
-            }else{
-                searchParent.classList.remove('--active')
-            }
-        })
-        header.querySelector('.header--collapsed__form__close').addEventListener('click',(e)=>{
-            searchParent.classList.remove('--active')
-            search.value = ''
-        })
-        // const headerMenu = header.querySelector('.header__menu'),
-        // navbarCollapsed = document.querySelector('.header--collapsed'),
-        // navbarCollapsedClose = document.querySelector('.header--collapsed__top__close')
-        
-        // headerMenu.addEventListener('click',()=>{
-            //     navbarCollapsed.classList.add('--active')
-        // })
-        // navbarCollapsedClose.addEventListener('click',()=>{
-            //     navbarCollapsed.classList.remove('--active')
-        // })
+        return allSuggestions
+        .filter(s => s.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 5);
     }
+    
+    function addToRecent(value) {
+        if (!recent.includes(value)) {
+            recent.unshift(value);
+            if (recent.length > 10) recent.pop();
+        }
+    }
+    
+    function renderSuggestions(suggestions) {
+        if (loading) return;
+        
+        dropdown.innerHTML = '';
+        const ul = document.createElement('ul');
+        
+        if (suggestions.length === 0) {
+            dropdown.innerHTML = `<div class="px-4 py-2 text-gray-500 italic">Not found</div>`;
+            showDropdown(true);
+            return;
+        }
+        
+        suggestions.forEach(s => {
+            const li = document.createElement('li');
+            li.textContent = s;
+            li.className = 'cursor-pointer px-4 py-2 hover:bg-gray-100';
+            li.onclick = () => {
+                input.value = s;
+                addToRecent(s);
+                showDropdown(false);
+                showResult(s);
+            };
+            ul.appendChild(li);
+        });
+        
+        dropdown.appendChild(ul);
+        
+        if (recent.length > 0) {
+            const clearBtn = document.createElement('div');
+            clearBtn.className = "px-4 py-2 text-red-600 text-sm cursor-pointer hover:bg-gray-100 border-t";
+            clearBtn.textContent = "Clear Recent";
+            clearBtn.onclick = () => {
+                recent = [];
+                renderSuggestions(getFilteredSuggestions(input.value));
+            };
+            dropdown.appendChild(clearBtn);
+        }
+        
+        showDropdown(true);
+    }
+    
+    function fetchSuggestions() {
+        setLoading(true);
+        setTimeout(() => { // simulasi loading
+            fetch('posts.json')
+            .then(res => res.json()) // ambil file JSON lokal
+            .then(data => {
+                allSuggestions = data.map(p => p.title);
+                loading = false;
+                renderSuggestions(getFilteredSuggestions(input.value));
+            })
+            .catch(() => {
+                allSuggestions = [];
+                loading = false;
+                renderSuggestions([]);
+            });
+        }, 800);
+    }
+    
+    function showResult(value) {
+        resultSection.innerHTML = `
+        <div class="p-4 space-y-2 animate-pulse">
+          <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+        </div>
+      `;
+        setTimeout(() => {
+            resultSection.innerHTML = `
+          <div class="p-4 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
+            <p><strong>Search result:</strong> ${value}</p>
+          </div>
+        `;
+        }, 1000);
+    }
+    
+    input.addEventListener('focus', () => {
+        if (allSuggestions.length === 0) {
+            fetchSuggestions();
+        } else {
+            renderSuggestions(getFilteredSuggestions(input.value));
+        }
+    });
+    
+    input.addEventListener('input', () => {
+        renderSuggestions(getFilteredSuggestions(input.value));
+    });
+    
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const value = input.value.trim();
+            if (value) {
+                addToRecent(value);
+                showDropdown(false);
+                showResult(value);
+            }
+        }
+    });
+    
+    document.addEventListener('click', e => {
+        if (!container.contains(e.target)) {
+            showDropdown(false);
+        }
+    });   
+    
     
     let lastScrollTop = 0, lastHeaderPosition = 0;
     window.addEventListener('scroll', function() {
@@ -88,621 +161,36 @@ window.addEventListener("load", () => {
         lastHeaderPosition = scrollHeaderTop;
     })
     
-    const mediaQuery = window.matchMedia('(min-width: 1024px)')
-    let floating = '<iframe class="vidio-embed bg-neutral-700" scrolling="no" frameborder="0" allowfullscreen allow="encrypted-media *;"></iframe>'
-    let floatingParent = document.querySelector('.story__swiper')
-    
-    document.querySelectorAll(".item").forEach(item => {
-        if (item.classList.contains('item--story')) {
-            let parentRect = floatingParent.getBoundingClientRect()
-            if (mediaQuery.matches) {
-                let newElement
-                item.addEventListener("mouseenter", () => {
-                    newElement = document.createElement('div');
-                    let itemRect = item.getBoundingClientRect()
-                    
-                    newElement.classList.add('story__floating')
-                    newElement.innerHTML = floating;
-                    floatingParent.after(newElement)
-                    
-                    newElement.querySelector('iframe').src = item.dataset.src
-                    newElement.style.left = itemRect.left.toFixed() - parentRect.left.toFixed() + (itemRect.width.toFixed() / 2) + 'px'
-                    setTimeout(() => {
-                        newElement.classList.add('--active')
-                    }, 500);
-                    
-                })
-                item.addEventListener("mouseleave", () => {
-                    newElement.classList.remove('--active')
-                    setTimeout(() => {
-                        newElement.remove()
-                    }, 500);
-                    
-                    // floating.classList.remove('--active')
-                    // floating.querySelector('iframe').removeAttribute("src");
-                });
-            }
-            
-        }else if(item.querySelector("iframe")){
-            const iframe = item.querySelector("iframe");
-            const dataSrc = iframe?.getAttribute("data-src");
-            item.addEventListener("mouseenter", () => {
-                iframe.src = dataSrc
-            });
-            
-            item.addEventListener("mouseleave", () => {
-                iframe.removeAttribute("src");
-            });
-        }
+    var heroSwiper = new Swiper(".section--hero-swiper", {
+        loop: 'true',
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".section--hero-swiper .swiper-pagination",
+        },
     });
-    
-    // Isotope filter
-    const grid = document.querySelector('.tab-grid');
-    if (grid) {
-        // setTimeout(() => {
-                const iso = new Isotope(grid, {
-                    itemSelector: '.card',
-                    layoutMode: 'fitRows'
-                });
-            
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const filterValue = this.getAttribute('data-filter');
-                    iso.arrange({ filter: filterValue });
-                });
-            });
-        // }, 100);
-    }
-    
-    function hoverMouseSwiper(container,func) {
-        func.mousewheel.disable();
-        container.addEventListener('mouseenter', () => {
-            func.mousewheel.enable();
-        });
-        container.addEventListener('mouseleave', () => {
-            func.mousewheel.disable();
-        });
-    }
-    
-    let storySwiper = document.querySelector('.story__swiper');
-    if(storySwiper){
-        const swiper = new Swiper(storySwiper, {
-            loop: true,
-            slidesPerView: "auto",
-            spaceBetween: 10,
-            mousewheel: {
-                forceToAxis: true,
-                releaseOnEdges: true,
-                sensitivity: 1,
-            },
-            freeMode: true,
-            navigation: {
-                nextEl: storySwiper.closest('.story')?.querySelector('.swiper-button-next'),
-                prevEl: storySwiper.closest('.story')?.querySelector('.swiper-button-prev'),
-            },
-            breakpoints: {
-                1024: {
-                    spaceBetween: 24,
-                },
-            },
-        });
-        hoverMouseSwiper(storySwiper, swiper)
-        
-    }
-    let sectVideo = document.querySelectorAll('.section--video')
-    if (sectVideo) {
-        sectVideo.forEach(container => {
-            const swiper = new Swiper(container.querySelector('.section--video__swiper'), {
-                slidesPerView: 'auto',
-                mousewheel: {
-                    forceToAxis: true,
-                    releaseOnEdges: true,
-                    sensitivity: 1,
-                },
-                navigation: {
-                    nextEl: container.querySelector('.swiper-button-next'),
-                    prevEl: container.querySelector('.swiper-button-prev'),
-                },
-            });
-            hoverMouseSwiper(container, swiper)
-        });
-    }
-    
-    let sectTrend = document.querySelectorAll('.section--trending .swiper')
-    if (sectTrend) {
-        sectTrend.forEach(el =>  {
-            const swiper = new Swiper(el, {
-                slidesPerView: 'auto',
-                mousewheel: {
-                    forceToAxis: true,
-                    releaseOnEdges: true,
-                    sensitivity: 1,
-                },
-                freeMode: true,
-                pagination: {
-                    el: el.querySelector('.swiper-pagination'),
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: el.closest('.section--trending')?.querySelector('.swiper-button-next'),
-                    prevEl: el.closest('.section--trending')?.querySelector('.swiper-button-prev'),
-                },
-                on: {
-                    progress: function (trendingSwiper , progress) {
-                        const customRowTitle = el.closest('.section--trending')
-                        
-                        if (customRowTitle) {
-                            trendingSwiper.progress === 0 ? customRowTitle.classList.remove('bla')  : customRowTitle.classList.add('bla') ;
-                        }
-                    },
-                }
-            });
-            hoverMouseSwiper(el, swiper)
-        });
-    }
-    
-    console.group('article share')
-    var shareParent = document.querySelectorAll('.readpage__share'),
-    shareUrl = window.location.href,
-    shareTitle = document.title
-    
-    if (shareParent) {
-        
-        shareParent.forEach(item => {   
-            var shareButton = item.querySelector('.readpage__share__button'),
-            shareCopy = item.querySelector('.readpage__share__copy'),
-            shareCancel = item.querySelector('.readpage__share__cancel')
-            // expand dropdown
-            shareButton.addEventListener('click', async (e) => {
-                if (navigator.share) {
-                    console.log('native');
-                    try {
-                        await navigator.share({
-                            title: shareTitle,
-                            url: shareUrl,
-                        });
-                        console.log('Shared successfully');
-                    } catch (err) {
-                        console.error('Error sharing:', err);
-                    }
-                } else {
-                    console.log('collapsed');
-                    item.classList.toggle('--collapsed')
-                }
-                e.preventDefault()
-            })
-            // social media share
-            console.log('socmed');
-            item.querySelector('.readpage__share__social__button--facebook').href = "https://www.facebook.com/sharer/sharer.php?u="+ encodeURIComponent(shareUrl) +"%2F&amp;src=sdkpreparse"
-            item.querySelector('.readpage__share__social__button--x').href = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareTitle)
-            item.querySelector('.readpage__share__social__button--whatsapp').href = "https://wa.me/?text="+ encodeURIComponent(shareTitle + " " + shareUrl)
-            item.querySelector('.readpage__share__social__button--telegram').href = "https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text="+ encodeURIComponent(shareTitle)
-            item.querySelector('.readpage__share__social__button--linkedin').href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(shareUrl)
-            
-            // copy link
-            shareCopy.addEventListener('click', (e) => {
-                console.log('copy');
-                navigator.clipboard.writeText(shareUrl);
-                shareCopy.querySelector('span').textContent = 'Link Copied!';
-                setTimeout(() => {
-                    shareCopy.querySelector('span').textContent = 'Copy Link';
-                }, 2000);
-                e.preventDefault()
-            });
-            // click close
-            shareCancel.addEventListener('click', (e) => {
-                item.classList.remove('--collapsed')
-                e.preventDefault()
-            })
-            // click outside
-            document.addEventListener('click', (e) => {
-                if (!item.contains(e.target)) {
-                    item.classList.remove('--collapsed')
-                }
-            });
-        });
-        console.groupEnd(); 
-        
-        let readpageAuthor = document.querySelector('.readpage__author')
-        readpageAuthor?.addEventListener('click', (e) => {
-            readpageAuthor.classList.toggle('--collapsed')
-        })
-    }
-    const readpageReaction = document.querySelector('.readpage__share__reaction');
-    if (readpageReaction) {
-        const likeBtn = readpageReaction.querySelector('.readpage__share__reaction__like');
-        const dislikeBtn = readpageReaction.querySelector('.readpage__share__reaction__dislike');
-        const likeCount = likeBtn.querySelector('.readpage__share__reaction__count');
-        
-        let liked = false;
-        let disliked = false;
-        let count = parseInt(likeCount.textContent, 10);
-        
-        likeBtn.addEventListener('click', () => {
-            if (liked) {
-                // Remove like
-                liked = false;
-                count--;
-                likeBtn.classList.remove('--active');
-            } else {
-                // Add like
-                liked = true;
-                count++;
-                likeBtn.classList.add('--active');
-                
-                // If dislike was active, remove it
-                if (disliked) {
-                    disliked = false;
-                    dislikeBtn.classList.remove('--active');
-                }
-            }
-            likeCount.textContent = count;
-        });
-        
-        dislikeBtn.addEventListener('click', () => {
-            if (disliked) {
-                // Remove dislike
-                disliked = false;
-                dislikeBtn.classList.remove('--active');
-            } else {
-                // Add dislike
-                disliked = true;
-                dislikeBtn.classList.add('--active');
-                
-                // If liked, remove like and decrement
-                if (liked) {
-                    liked = false;
-                    count--;
-                    likeBtn.classList.remove('--active');
-                }
-            }
-            likeCount.textContent = count;
-        });
-    }
-    
-    
-    console.group('vertical')
-    // vertical
-    let sections = document.querySelectorAll("[data-section]");
-    let indicators = document.querySelector("[data-indicator]");
-    const scrollRoot = document.querySelector('[data-scroller]')
-    
-    let currentIndex = 0;
-    let prevYPosition = 0;
-    
-    let options = {
-        root: scrollRoot,
-        rootMargin: "-12% 0px -88% 0px"
-    };
-    
-    const setScrollDirection = () => {
-        if(scrollRoot){
-            
-            if (scrollRoot.scrollTop > prevYPosition) {
-                if(currentIndex % 5 === 0){
-                    indicators.scrollBy({ 
-                        top: indicators.clientHeight,
-                        behavior: 'smooth' 
-                    });
-                }
-            } else {
-                if((currentIndex + 1) % 5 === 0){
-                    indicators.scrollBy({ 
-                        top: -indicators.clientHeight,
-                        behavior: 'smooth' 
-                    });
-                }
-            }
-            prevYPosition = scrollRoot.scrollTop + (scrollRoot.clientHeight / 3)
-        }
-    }
-    
-    const setIndicator = () => {
-        if(indicators){
-            indicators.innerHTML = '';
-            for (var i = 0; i < sections.length; i++) {
-                var button = document.createElement('span');
-                
-                button.classList.add('indicator-bullet', 'snap-always', 'shrink-0', 'size-2', 'bg-black/50');
-                if(i === currentIndex){
-                    button.classList.add('indicator-bullet-active')
-                }
-                
-                (function(i) {
-                    button.onclick = function() {
-                        sections[i].scrollIntoView();
-                    }
-                })(i);
-                
-                indicators.appendChild(button);
-            }
-        }
-    }
-    
-    var btnpageNext = document.querySelector('.btn--page-next');
-    var btnpagePrev = document.querySelector('.btn--page-prev');
-    if(btnpageNext){
-        btnpageNext.addEventListener("click", function(e){
-            
-            document.querySelector('[data-section].active').nextElementSibling.scrollIntoView({block: 'start'});
-            e.preventDefault();
-        })
-    }
-    if(btnpagePrev){
-        btnpagePrev.addEventListener("click", function(e){
-            document.querySelector('[data-section].active').previousElementSibling.scrollIntoView({block: 'end'});
-            e.preventDefault();
-        })
-    }
-    
-    const players = document.querySelectorAll('.player');
-    const isMobile = window.innerWidth <= 768;
-
-    const observer = new IntersectionObserver((entries) => {
-    // window.io = new IntersectionObserver((entries) => {
-        
-        entries.forEach(entry => {
-            const player = entry.target;
-            const sid = entry.target.dataset.sid;
-            
-            // console.log('isIntersecting', entry.isIntersecting);
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-                currentIndex = elementIndices[sid];
-                
-                setIndicator();
-                setScrollDirection();
-                
-                // let entryVideo = entry.target.querySelector('iframe')
-                // entryVideo.src = entryVideo.dataset.src
-
-                var sectionLength = document.querySelectorAll('.section[data-sid]')?.length;
-                if(btnpagePrev){
-                    if(currentIndex == 0 || document.querySelector('[data-section=mobile-billboard].is-visible')?.getBoundingClientRect().top + scrollRoot.scrollTop == 0){
-                        btnpagePrev.classList.add('disabled')
-                    }else{
-                        btnpagePrev.classList.remove('disabled')
-                        btnpageNext.classList.remove('disabled')
-                        if(currentIndex + 1 == sectionLength){
-                            btnpageNext.classList.add('disabled')
-                        }
-                    }
-                }
-
-                players.forEach(p => {
-                    const pIframe = p.querySelector('iframe');
-                    
-                    if (p === player) {
-                        if (!pIframe.src) {
-                            let currentSrc = pIframe.dataset.src;
-                            
-                            if (isMobile) {
-                                // if (!currentSrc.includes("hide_controller=true")) {
-                                //   currentSrc += "&hide_controller=true";
-                                // }
-                                pIframe.setAttribute("data-src", currentSrc);
-                                pIframe.src = currentSrc;
-                                
-                            } else {
-                                pIframe.src = currentSrc;
-                            }
-                        }
-                        
-                        p.classList.add('active');
-                    } else {
-                        p.classList.remove('active');
-                        pIframe.removeAttribute('src');
-                    }
-                });
-                
-                
-            } else {
-                entry.target.classList.remove("active");
-                
-                // let entryVideo = entry.target.querySelector('iframe')
-                // entryVideo.src = ''
-            }
-        });
-    }, options);
-    
-    var elementIndices = {};
-    function initSection()
-    {
-        var sectionsIns = document.querySelectorAll('[data-section]:not([data-theme="ads"],[data-theme="insertion"],[data-page="0"])')
-        for (var i = 0; i < sectionsIns.length; i++) {
-            var sid = (Math.random() + 1).toString(36).substring(7);
-            sectionsIns[i].dataset.sid = sid;
-            elementIndices[sectionsIns[i].dataset.sid] = i;
-        }
-        for (var i = 0; i < sections.length; i++) {
-            if(window.io && window.io.unobserve) window.io.unobserve(sections[i]);
-            if(window.io && window.io.observe) window.io.observe(sections[i]);
-        }
-    }
-    initSection();
-    
-
-    players.forEach(player => {
-        observer.observe(player);
-        
-        const toggleButton = player.querySelector('.truncate-toggle');
-        const paragraph = player.querySelector('.truncate-paragraph');
-        
-        if (toggleButton && paragraph) {
-            toggleButton.addEventListener('click', function () {
-                if (paragraph.classList.contains('line-clamp-2')) {
-                    paragraph.classList.remove('line-clamp-2');
-                    paragraph.classList.add('overflow-y-auto');
-                    
-                    this.textContent = 'Sembunyikan';
-                } else {
-                    paragraph.classList.add('line-clamp-2');
-                    paragraph.classList.remove('overflow-y-auto');
-                    this.textContent = 'Selengkapnya';
-                }
-            });
-        }
-        
-        
-        const share = player.querySelectorAll('.share')
-        if(share){
-            share.forEach(item => {   
-                const shareBtn = item.querySelector('.share-btn')
-                const shareCopy = item.querySelector('.share__copy')
-                const shareCancel = item.querySelector('.share__cancel')
-                let shareTitle,
-                shareText,
-                shareUrl
-                
-                
-                shareBtn.addEventListener('click', async() => {
-                    
-                    shareTitle = shareBtn.closest('.player').querySelector('.title')?.textContent || '';
-                    shareText = shareBtn.closest('.player').querySelector('.truncate-paragraph')?.textContent || '';
-                    shareUrl = window.location.href
-                    
-                    console.log(shareTitle,shareText,shareUrl);
-                    if (navigator.share && isMobile) {
-                        try {
-                            await navigator.share({
-                                title: shareTitle,
-                                text: shareText,
-                                url: shareUrl // Share the current page URL
-                            });
-                            console.log('Content shared successfully!');
-                        } catch (error) {
-                            console.log(`Error sharing: ${error.message}`);
-                        }
-                    } else {
-                        console.log("Web Share API is not supported in your browser.");
-                        item.classList.toggle('--collapsed')
-                        // social media share
-                        item.querySelector('.share__social__button--facebook').href = "https://www.facebook.com/sharer/sharer.php?u="+ encodeURIComponent(shareUrl) +"%2F&amp;src=sdkpreparse"
-                        item.querySelector('.share__social__button--x').href = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(shareUrl) + "&text=" + encodeURIComponent(shareTitle)
-                        item.querySelector('.share__social__button--whatsapp').href = "https://wa.me/?text="+ encodeURIComponent(shareTitle + " " + shareUrl)
-                        item.querySelector('.share__social__button--telegram').href = "https://t.me/share/url?url=" + encodeURIComponent(shareUrl) + "&text="+ encodeURIComponent(shareTitle)
-                        item.querySelector('.share__social__button--linkedin').href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(shareUrl)
-                    }
-                });
-                
-                // copy link
-                shareCopy.addEventListener('click', (e) => {
-                    console.log('copy');
-                    navigator.clipboard.writeText(shareUrl);
-                    shareCopy.querySelector('span').textContent = 'Link Copied!';
-                    setTimeout(() => {
-                        shareCopy.querySelector('span').textContent = 'Copy Link';
-                    }, 2000);
-                    e.preventDefault()
-                });
-                // click close
-                shareCancel.addEventListener('click', (e) => {
-                    item.classList.remove('--collapsed')
-                    e.preventDefault()
-                })
-                // click outside
-                // document.addEventListener('click', (e) => {
-                //     if (!item.contains(e.target)) {
-                //         item.classList.remove('--collapsed')
-                //     }
-                // });
-            });
-            console.groupEnd(); 
-            
-        }
-        
-        
-        
+    var productImage = new Swiper(".section--product-image", {
+        loop: 'true',
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+    });
+    var productDesc = new Swiper(".section--product-desc", {
+        loop: 'true',
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        navigation: {
+            nextEl: ".section--product .swiper-button-next",
+            prevEl: ".section--product .swiper-button-prev",
+        },
     });
 
-    window.addEventListener('message', (event) => {
-        const data = event.data;
-        if (!data?.event) return;
-        
-        players.forEach(player => {
-            const iframe = player.querySelector('iframe');
-            if (event.source !== iframe?.contentWindow) return;
-            
-            switch (data.event) {
-                case 'vidio.playback.ready':
-                console.log('Video Mulai');
-                if (isMobile) {
-                    iframe.contentWindow?.postMessage('vidio.playback.ui.hide_fullscreen', '*');
-                    iframe.contentWindow?.postMessage('vidio.playback.ui.hide_vidio_logo', '*');
-                    iframe.contentWindow?.postMessage('vidio.playback.ui.hide_topbar', '*');
-                } else {
-                    iframe.contentWindow?.postMessage('vidio.playback.ui.show_components', '*');
-                }
-                
-                break;
-                
-                case 'vidio.playback.playing':
-                console.log('Video Playing');
-                break;
-                
-                case 'vidio.playback.vod.ended':
-                console.log('Video Selesai');
-                break;
-            }
-        });
-    });
-    
-
-    const overlay = document.querySelector('.overlay-infoTools')
-    if (overlay) {
-        const hasVisited = localStorage.getItem("visited");
-        if (!hasVisited) {
-        overlay.style.display = "flex";
-        localStorage.setItem("visited", "true");
-        } else {
-            overlay.style.display = "none";
-        }
-    }
-    let splash = document.querySelector('.overlay-splash')
-    if (splash) {
-        setTimeout(() => {
-            splash.classList.add('opacity-0')
-            setTimeout(() => {
-                splash.classList.add('hidden')
-                
-            }, 1000);
-        }, 3000);
-    }
-
-    // let moreless = document.querySelectorAll('.moreLess');
-    // if (moreless) {
-    //     moreless?.forEach(item => {
-    //         const btn = item.querySelector('.moreLess-trigger');
-    //         btn.addEventListener('click', () => {
-    //             item.classList.toggle('--open');
-    //             btn.textContent = item.classList.contains('--open')
-    //             ? 'Sembunyikan'
-    //             : 'Selengkapnya';
-    //         });
-    //     });
-    // }
-    
-    
-    // let popupTrigger = document.querySelectorAll('[data-popup]')
-    // if (popupTrigger){
-    //     popupTrigger?.forEach(item => {
-    //         item.addEventListener("click", (e) => {
-    //             let popup = document.querySelector('[data-popup-open="'+item.dataset.popup+'"]')
-    //             popup.classList.add('--open')
-    //             e.preventDefault()
-    //         })
-    //     })
-    //     let popupClose = document.querySelectorAll('[data-popup-close]')
-    //     popupClose?.forEach(item => {
-    //         item.addEventListener("click", (e) => {
-    //             let popup = document.querySelector('[data-popup-open].--open')
-    //             popup.classList.remove('--open')
-    //             e.preventDefault()
-    //         })
-    //     })
-    // }
-    
+    productDesc.controller.control = productImage;
+    productImage.controller.control = productDesc;
 })
 

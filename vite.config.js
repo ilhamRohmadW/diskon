@@ -12,13 +12,7 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: './homepage.html',
-        index: './index.html',
-        readpage: './readpage.html',
-        indexSpecial: './indexSpecial.html',
-        story: './story.html',
-        story2: './story2.html',
-        vertical: './vertical.html',
+        main: './index.html',
       },
       output: {
         entryFileNames: 'assets/js/[name].js', // Specify the desired output file name for the main JS file

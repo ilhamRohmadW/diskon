@@ -1,7 +1,10 @@
 @theme {
-  --color-primary: #FF3300;
-  --color-secondary: #FF6600;
-  --font-inter: "Inter", sans-serif;
+  --color-primary: #584DFC;
+  --color-secondary: #E94786;
+  --color-third: #FF6600;
+  --font-body: "Bricolage Grotesque", sans-serif;
+  --font-head: "Dela Gothic One", sans-serif;
+  --font-product: "Oswald", sans-serif;
 }
 
 @layer components {
@@ -9,28 +12,10 @@
     object-fit: contain;
   }
   .container {
-    @apply relative max-w-screen-lg! mx-auto px-4 lg:max-w-[90%]! {}
+    @apply relative max-w-screen-lg! mx-auto px-6 {}
   }
   .section {
-    @apply relative pb-4 mb-4 lg:py-6 lg:mb-0 {}
-  }
-  .section__title {
-    @apply flex items-center justify-between gap-2 text-xl font-bold mb-3 {}
-  }
-  .section__title__text {
-    @apply flex gap-2 items-center {}
-  }
-  .section__title__text svg {
-    @apply size-4 shrink-0 {}
-  }
-  .section__title__more {
-    @apply flex gap-2 items-center text-sm font-normal hover:underline {}
-  }
-  .section--row {
-    @apply lg:flex lg:items-start lg:gap-8 {}
-  }
-  .section--aside {
-    @apply lg:w-[300px] lg:shrink-0 {}    @apply xl:w-[370px] {}
+    @apply relative {}
   }
   .item__figure {
     @apply relative rounded-lg overflow-hidden mb-2.5 lg:mb-4 {}
@@ -50,52 +35,11 @@
   .item__detail {
     @apply flex items-center gap-1 lg:gap-2 text-xs {}
   }
-  .item--story .item__time {
-    @apply group-hover:opacity-100 lg:group-hover:opacity-0 {}
+  .overflow-y-auto, .overflow-x-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .item--story .item__video {
-    @apply -mx-6 w-[168px] z-30 {}
-  }
-  .item--row {
-    @apply flex items-start gap-2.5 {}
-  }
-  .item--row .item__figure {
-    @apply w-44 shrink-0 mb-0 {}    @apply lg:w-40 {}
-  }
-  .item--row .item__title {
-    @apply line-clamp-3 leading-tight text-sm lg:mb-0.5 {}
-  }
-  .item--row .item__detail {
-    @apply flex-col items-start lg:gap-0.5 {}
-  }
-  .news-list {
-    @apply relative grid grid-cols-2 lg:grid-cols-4 -m-2 {}
-  }
-  .news-list .item {
-    @apply block rounded-lg pt-2 px-2 pb-4 {}
-  }
-  .news-list-row {
-    @apply flex flex-col gap-4 mt-5 {}    @apply lg:mt-0 {}
-  }
-  .topik-list {
-    @apply flex items-center flex-wrap gap-3 text-sm {}
-  }
-  .topik-list__link {
-    @apply px-4 py-2 rounded-full transition-colors w-full h-full block {}
-  }
-  .tab-filter {
-    @apply flex gap-2 {}
-  }
-  .tab-btn {
-    @apply font-semibold border text-sm rounded-full px-4 py-2 cursor-pointer {}
-  }
-  .tab-btn:hover, .tab-btn.active {
-    @apply text-primary border-primary/20 bg-primary/10 {}
-  }
-  .tab-grid {
-    @apply flex flex-wrap -mx-2 mt-6 {}
-  }
-  .tab-grid .card {
-    @apply w-full px-2 mb-6 {}    @apply sm:w-1/3 md:w-1/4 lg:w-1/5 {}
+  .overflow-y-auto::-webkit-scrollbar, .overflow-x-auto::-webkit-scrollbar {
+    display: none;
   }
 }

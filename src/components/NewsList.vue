@@ -1,85 +1,34 @@
 <script setup>
-  import News1 from '../assets/image/news-1.png';
-  import News2 from '../assets/image/news-2.png';
-  import News3 from '../assets/image/news-3.png';
-  import News4 from '../assets/image/news-4.png';
+    defineProps(['image','textColor']);
 </script>
+
 <template>
-    <ul class="news-list *:*:hover:bg-white/10 *:*:transition-colors">
-        <li class="news-list__item">
-            <a href="#" class="item group">
-                <figure class="item__figure">
-                    <img class="item__figure__img" :src="News1" alt="">
-                    <iframe class="item__video vidio-embed" data-src="https://www.vidio.com/live/205-indosiar/embed?autoplay=true&player_only=true&mute=false" width="560" height="317" scrolling="no" frameborder="0" allowfullscreen allow="encrypted-media *;"></iframe>
-                    <span class="item__time bg-black/70 text-white">
-                        <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.93777 5.13033L1.52473 0.747786C0.922419 0.391876 0 0.737256 0 1.61756V10.3805C0 11.1703 0.857133 11.6462 1.52473 11.2503L8.93777 6.86986C9.59905 6.48026 9.60116 5.51993 8.93777 5.13033Z" fill="currentColor"/></svg>
-                        <span>05:30</span>
-                    </span>
+    <div class="section--news-box">
+        <div class="section--news-head mb-6">
+            <a href="#" class="border-2 rounded-lg overflow-hidden bg-white flex flex-col"
+            :class="textColor || ''"
+            >
+                <figure class="aspect-[4/3]">
+                    <img :src="image" class="w-full h-full object-cover" alt="">
                 </figure>
-                <span class="item__title">VIDEO : Inovasi “Gila” Dari GITEX 2025</span>
-                <div class="item__detail">
-                    <span class="item__tag">LIputan6 Update</span>
-                    <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3.33362" r="3" fill="currentColor"/></svg>
-                    <span class="item__published">1 jam lalu</span>
+                <div class="item-desc py-4 px-3 flex flex-col gap-1.5">
+                    <span class="item-title font-bold text-xl">Intip tren outfit kece yang lagi rame di FYP, gampang ditiru buat gaya sehari-hari.</span>
+                    <p class="line-clamp-3 text-sm">Intip tren outfit kece yang lagi rame di FYP, gampang ditiru buat gaya sehari-hari. Rekomendasi coffee shop hits buat nongkrong, fotoan, sekaligus kerja biar makin produktif.</p>
+                    <div class="text-xs"><span>Kapanlagi.com</span> - <span>2 jam yang lalu</span></div>
                 </div>
             </a>
-        </li>
-        <li class="news-list__item">
-            <a href="#" class="item group">
-                <figure class="item__figure">
-                    <img class="item__figure__img" :src="News2" alt="">
-                    <iframe class="item__video vidio-embed" data-src="https://www.vidio.com/live/205-indosiar/embed?autoplay=true&player_only=true&mute=false" width="560" height="317" scrolling="no" frameborder="0" allowfullscreen allow="encrypted-media *;"></iframe>
-                    <span class="item__time bg-black/70 text-white">
-                        <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.93777 5.13033L1.52473 0.747786C0.922419 0.391876 0 0.737256 0 1.61756V10.3805C0 11.1703 0.857133 11.6462 1.52473 11.2503L8.93777 6.86986C9.59905 6.48026 9.60116 5.51993 8.93777 5.13033Z" fill="currentColor"/></svg>
-                        <span>05:30</span>
-                    </span>
+        </div>
+        <div class="section--news-list overflow-x-auto -mx-6 px-6 flex items-start gap-3 snap-x snap-mandatory scroll-smooth">
+            <a v-for="n in 4" :key="n" href="#" class="flex flex-col shrink-0 w-40 snap-always snap-start scroll-ms-6">
+                <figure class="aspect-[4/3] mb-2.5 border-2 rounded-lg overflow-hidden">
+                    <img :src="image" class="w-full h-full object-cover" alt="">
                 </figure>
-                <span class="item__title">VIDEO ZENERATION: Bahan Dapur Bikin Bye Jerawat</span>
-                <div class="item__detail">
-                    <span class="item__tag">Zeneration</span>
-                    <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3.33362" r="3" fill="currentColor"/></svg>
-                    <span class="item__published">1 jam lalu</span>
+                <div class="item-desc">
+                    <span class="item-title text-xs font-bold mb-1.5">Panggung Megah Konser D'Academy 7 Siap Digelar! Audisi Online</span>
+                    <div class="text-[10px]"><span>Kapanlagi.com</span> - <span>2 jam yang lalu</span></div>
                 </div>
             </a>
-        </li>
-        <li class="news-list__item">
-            <a href="#" class="item group">
-                <figure class="item__figure">
-                    <img class="item__figure__img" :src="News3" alt="">
-                    <iframe class="item__video vidio-embed" data-src="https://www.vidio.com/live/205-indosiar/embed?autoplay=true&player_only=true&mute=false" width="560" height="317" scrolling="no" frameborder="0" allowfullscreen allow="encrypted-media *;"></iframe>
-                    <span class="item__time bg-black/70 text-white">
-                        <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.93777 5.13033L1.52473 0.747786C0.922419 0.391876 0 0.737256 0 1.61756V10.3805C0 11.1703 0.857133 11.6462 1.52473 11.2503L8.93777 6.86986C9.59905 6.48026 9.60116 5.51993 8.93777 5.13033Z" fill="currentColor"/></svg>
-                        <span>05:30</span>
-                    </span>
-                </figure>
-                <span class="item__title">VIDEO JOURNAL: KKN di Desa Penari dan Selera Horor Penonton Indonesia</span>
-                <div class="item__detail">
-                    <span class="item__tag">LIputan6 Update</span>
-                    <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3.33362" r="3" fill="currentColor"/></svg>
-                    <span class="item__published">1 jam lalu</span>
-                </div>
-            </a>
-        </li>
-        <li class="news-list__item">
-            <a href="#" class="item group">
-                <figure class="item__figure">
-                    <img class="item__figure__img" :src="News4" alt="">
-                    <iframe class="item__video vidio-embed" data-src="https://www.vidio.com/live/205-indosiar/embed?autoplay=true&player_only=true&mute=false" width="560" height="317" scrolling="no" frameborder="0" allowfullscreen allow="encrypted-media *;"></iframe>
-                    <span class="item__time bg-black/70 text-white">
-                        <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.93777 5.13033L1.52473 0.747786C0.922419 0.391876 0 0.737256 0 1.61756V10.3805C0 11.1703 0.857133 11.6462 1.52473 11.2503L8.93777 6.86986C9.59905 6.48026 9.60116 5.51993 8.93777 5.13033Z" fill="currentColor"/></svg>
-                        <span>05:30</span>
-                    </span>
-                </figure>
-                <span class="item__title">VIDEO Liputan6 Update: Truk Muatan Dilarang Inflasi Datang?</span>
-                <div class="item__detail">
-                    <span class="item__tag">LIputan6 Update</span>
-                    <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="3.33362" r="3" fill="currentColor"/></svg>
-                    <span class="item__published">1 jam lalu</span>
-                </div>
-            </a>
-        </li>
-    </ul>
+        </div>
+
+    </div>
 </template>
-<style>
-    @import '../assets/sass/components/news-list.css';
-</style>
