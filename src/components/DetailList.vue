@@ -3,9 +3,9 @@
 </script>
 
 <template>
-    <div class="section--detail-box grid gap-7 items-start lg:grid-cols-4">
-        <div class="grid-item lg:col-span-4 grid lg:grid-cols-4 gap-7">
-            <div class="section--detail-headline lg:col-span-2">
+    <div class="section--detail-box grid md:grid-cols-2 gap-7 items-start lg:grid-cols-4">
+        <div class="grid-item md:col-span-2 lg:col-span-4 grid md:grid-cols-2 lg:grid-cols-4 gap-7">
+            <div class="section--detail-headline md:col-span-2">
                 <a href="#" class="item bg-white">
                     <figure class="item-figure aspect-[4/3] w-full">
                         <img :src="image" class="w-full h-full object-cover" alt="">
@@ -17,26 +17,26 @@
                     </div>
                 </a>
             </div>
-            <div class="section--detail-list w-full lg:col-span-2 lg:grid lg:grid-cols-2">
+            <div class="section--detail-list w-full md:col-span-2 md:grid md:grid-cols-2">
                 <a v-for="n in 4" :key="n" href="#" class="item">
-                    <figure class="item-figure aspect-[150/85] border-black">
+                    <figure class="item-figure aspect-[4/3] border-black">
                         <img :src="image" class="w-full h-full object-cover" alt="">
                     </figure>
                     <div class="item-detail">
-                        <span class="item-title font-bold line-clamp-3 leading-tight">Panggung Megah Konser D'Academy 7 Siap Digelar! Audisi Online</span>
-                        <div class="item-info text-[10px] lg:text-base"><span>Kapanlagi.com</span> - <span>2 jam yang lalu</span></div>
+                        <span class="item-title font-bold line-clamp-3 lg:text-xl leading-tight">Panggung Megah Konser D'Academy 7 Siap Digelar! Audisi Online</span>
+                        <div class="item-info text-[10px] lg:text-sm xl:text-base"><span>Kapanlagi.com</span> - <span>2 jam yang lalu</span></div>
                     </div>
                 </a>
             </div>
         </div>
         <div v-for="n in 4" :key="n" class="grid-item">
             <a href="#" class="item">
-                <figure class="item-figure aspect-[150/85] border-black">
+                <figure class="item-figure aspect-[4/3] border-black">
                     <img :src="image" class="w-full h-full object-cover" alt="">
                 </figure>
                 <div class="item-detail">
-                    <span class="item-title font-bold line-clamp-3 leading-tight">Panggung Megah Konser D'Academy 7 Siap Digelar! Audisi Online</span>
-                    <div class="item-info text-[10px] lg:text-base"><span>Kapanlagi.com</span> - <span>2 jam yang lalu</span></div>
+                    <span class="item-title font-bold line-clamp-3 lg:text-xl leading-tight">Panggung Megah Konser D'Academy 7 Siap Digelar! Audisi Online</span>
+                    <div class="item-info text-[10px] lg:text-sm xl:text-base"><span>Kapanlagi.com</span> - <span>2 jam yang lalu</span></div>
                 </div>
             </a>
         </div>
@@ -51,17 +51,19 @@
         .section--detail-box{
             .section--detail-headline{
                 .item{
-                    @apply border-2 rounded-lg overflow-hidden flex flex-col;
+                    @apply border-2 rounded-lg overflow-hidden flex flex-col gap-0;
+                    .item-figure{
+                        @apply border-0 rounded-none;
+                    }
                     .item-detail{
                         @apply py-4 px-3 flex flex-col gap-1.5;
-                        @apply lg:p-10;
+                        @apply xl:p-10;
                     }
                 }
             }
             .section--detail-list{
                 @apply flex flex-col gap-7;
-                @apply md:grid md:grid-cols-2 md:mx-0 md:px-0 md:w-1/2;
-                @apply lg:gap-x-8 md:mx-0 md:px-0 md:w-1/2;
+                @apply lg:grid lg:grid-cols-2 lg:mx-0 lg:px-0 lg:w-1/2 lg:gap-x-8 md:mx-0 md:px-0 md:w-1/2;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
                 &::-webkit-scrollbar{
@@ -75,7 +77,7 @@
                     @apply mb-1.5;
                 }
                 .item-figure{
-                    @apply w-[150px] shrink-0 border-2 rounded-lg overflow-hidden;
+                    @apply w-[120px] shrink-0 border-2 rounded-lg overflow-hidden;
                     @apply lg:w-full;
                 }
             }

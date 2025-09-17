@@ -13,22 +13,22 @@ import News2 from './assets/image/news-2.png'
     <HeaderC/>
     <main class="main flex flex-col overflow-x-hidden">
         <section class="section section--detail">
-            <div class="section--detail-title bg-gray-50 bg-center">
+            <div class="section--detail-title bg-[#8A82FF] bg-center lg:py-24">
                 <TitleC 
                 class="section-title--centered mb-0"
                 title="Pilih Yang Kamu Mau"
-                titleClass="text-2xl"
+                titleClass="text-2xl lg:text-4xl"
                 linkClass="hidden"
                 />
             </div>
             <div class="tabs">
-                <div class="tabs-nav font-extrabold text-lg">
-                    <button class="tabs-btn bg-[#FF934B]" data-tab="tab1">Great Deals</button>
-                    <button class="tabs-btn bg-fifth" data-tab="tab2">fimela Essentials</button>
+                <div class="tabs-nav font-extrabold text-lg lg:text-3xl lg:gap-8">
+                    <button class="tabs-btn bg-[#FF934B] active" data-tab="tab1">Great Deals</button>
+                    <button class="tabs-btn bg-fifth" data-tab="tab2">Fimela Essentials</button>
                     <button class="tabs-btn bg-[#FDB414]" data-tab="tab3">Koleksi Kalcer</button>
                 </div>
                 <div class="tabs-content">
-                    <div id="tab1" class="tabs-content-item bg-[#FFF9E8]">
+                    <div id="tab1" class="tabs-content-item bg-[#FFF9E8] active">
                         <div class="container">
                             <DetailList :image="News1"/>
                             <Pagination/>
@@ -42,7 +42,7 @@ import News2 from './assets/image/news-2.png'
                     </div>
                     <div id="tab3" class="tabs-content-item bg-[#FFE9C8]">
                         <div class="container">
-                            <DetailList :image="News1"/>
+                            <DetailList :image="News2"/>
                             <Pagination/>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ import News2 from './assets/image/news-2.png'
         }
         .tabs{
             .tabs-nav{
-                @apply flex overflow-x-auto gap-4 px-6 whitespace-nowrap -my-6;
+                @apply flex overflow-x-auto pb-3 lg:pb-4 gap-4 px-6 whitespace-nowrap -mt-6 -mb-9 lg:-mt-7 lg:-mb-11;
                 @apply sm:justify-center;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
@@ -73,11 +73,11 @@ import News2 from './assets/image/news-2.png'
                     display: none;
                 }
                 .tabs-btn{
-                    @apply px-6 py-2 border-2 rounded-full cursor-pointer;
-                }
-                &.active { 
-                    font-weight: bold;
-                    color: red;
+                    @apply px-6 py-2 border-2 rounded-full cursor-pointer transition-shadow;
+                    &.active { 
+                        @apply shadow-[3px_5px_0px_0px_#000000];
+                        @apply lg:shadow-[3px_10px_0px_0px_#000000];
+                    }
                 }
             }
             .tabs-content-item { 
