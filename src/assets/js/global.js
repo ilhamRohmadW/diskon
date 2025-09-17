@@ -4,6 +4,10 @@ window.addEventListener("load", () => {
     const resultSection = document.getElementById('result-section');
     const container = document.getElementById('search-container');
     
+    const PhSearch = document.querySelector(".header-placeholder");
+    let PhIndex = 0;
+    let PhInterval;
+
     let allSuggestions = [];
     let recent = [];
     let loading = false;
@@ -101,11 +105,11 @@ window.addEventListener("load", () => {
     
     function showResult(value) {
         resultSection.innerHTML = `
-        <div class="p-4 space-y-2 animate-pulse">
-            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div class="h-4 bg-gray-200 rounded w-1/2"></div>
-        </div>
-    `;
+            <div class="p-4 space-y-2 animate-pulse">
+                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
+        `;
         setTimeout(() => {
             resultSection.innerHTML = `
             <div class="p-4 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
@@ -121,10 +125,43 @@ window.addEventListener("load", () => {
         } else {
             renderSuggestions(getFilteredSuggestions(input.value));
         }
+        
+        stopRotation();
+        PhSearch.textContent = "Cari Produk...";
+        PhSearch.style.opacity = 1;
     });
     
     input.addEventListener('input', () => {
         renderSuggestions(getFilteredSuggestions(input.value));
+    });
+    
+    const placeholders = [
+        "Samsung Galaxy A14",
+        "Iphone 14 Pro Max",
+        "Macbook Air M2",
+        "Lipstick Merah",
+        "Parfum Wanita",
+    ];
+    
+    function startRotation() {
+        PhInterval = setInterval(() => {
+            PhSearch.style.opacity = 0; // fade out
+            setTimeout(() => {
+                PhIndex = (PhIndex + 1) % placeholders.length;
+                PhSearch.textContent = placeholders[PhIndex];
+                PhSearch.style.opacity = 1; // fade in
+            }, 500);
+        }, 2000);
+    }
+    
+    function stopRotation() {
+        clearInterval(PhInterval);
+    }
+    
+    startRotation();
+    
+    input.addEventListener("blur", () => {
+        startRotation();
     });
     
     input.addEventListener('keydown', e => {

@@ -14,6 +14,7 @@ export default defineConfig({
       input: {
         main: './index.html',
         filter: './filter.html',
+        detail: './detail.html',
       },
       output: {
         entryFileNames: 'assets/js/[name].js', // Specify the desired output file name for the main JS file

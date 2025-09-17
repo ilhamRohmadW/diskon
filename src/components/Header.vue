@@ -20,10 +20,10 @@
                         <input
                         id="search-input"
                         type="text"
-                        placeholder="Cari Product..."
                         class="header-search-input placeholder:text-neutral-500"
                         autocomplete="off"
                         />
+                        <span class="header-placeholder">Cari Product...</span>
                         <button class="header-search-button" type="button">
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.1912 21L16.8512 16.66M19.1912 11C19.1912 15.4183 15.6094 19 11.1912 19C6.77288 19 3.19116 15.4183 3.19116 11C3.19116 6.58172 6.77288 3 11.1912 3C15.6094 3 19.1912 6.58172 19.1912 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
@@ -77,6 +77,9 @@
         .header-wrapper{
             @apply flex flex-col items-center gap-x-12;
             @apply lg:flex-row;
+        }
+        .header-placeholder{
+            @apply h-fit absolute left-4 inset-y-0 my-auto pointer-events-none transition-opacity whitespace-nowrap duration-500;
         }
         .header-logo{
             @apply flex items-center justify-center gap-2.5 mb-2.5 shrink-0;
