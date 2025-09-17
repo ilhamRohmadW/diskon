@@ -1,0 +1,7 @@
+[
+    { "id": 1, "title": "Belajar JavaScript dasar" },
+    { "id": 2, "title": "Membuat aplikasi React sederhana" },
+    { "id": 3, "title": "Tips produktivitas coding" },
+    { "id": 4, "title": "Panduan TailwindCSS untuk pemula" },
+    { "id": 5, "title": "Next.js vs Vue.js: mana lebih baik?" }
+]

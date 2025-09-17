@@ -9,6 +9,7 @@ import CategoryList from './components/CategoryList.vue'
 import HeroSwiper from './components/HeroSwiper.vue'
 import ProductSwiper from './components/ProductSwiper.vue'
 import ProductList from './components/ProductList.vue'
+import PartnerList from './components/PartnerList.vue'
 import Marquee from './components/Marquee.vue'
 
 //image
@@ -19,24 +20,16 @@ import News1 from './assets/image/news-1.png'
 import News2 from './assets/image/news-2.png'
 import Product2 from './assets/image/product-2.png'
 import Product3 from './assets/image/product-3.png'
-import PartnerLip6 from './assets/image/partner-lip6.png'
-import PartnerKl from './assets/image/partner-kl.png'
-import PartnerMerdeka from './assets/image/partner-mdk.png'
-import PartnerOtosia from './assets/image/partner-otosia.png'
-import PartnerBolanet from './assets/image/partner-bolanet.png'
 import PartnerCompas from './assets/image/partner-compas.png'
-import PartnerFimela from './assets/image/partner-fimela.png'
 </script>
 
 <template>
     <HeaderC/>
-    <main class="main flex flex-col">
+    <main class="main flex flex-col overflow-x-hidden">
         <section class="section section--hero">
-            <div class="container">
-                <HeroSwiper/>
-            </div>
+            <HeroSwiper/>
         </section>
-        <section class="section section--category bg-[#FFB84C] pt-12 pb-20 bg-center">
+        <section class="section section--category bg-[#FFB84C] pt-12 pb-20 bg-center lg:pt-20 lg:pb-50">
             <div class="container">
                 <TitleC 
                 title="Jelajahi Kategori Populer"
@@ -47,112 +40,109 @@ import PartnerFimela from './assets/image/partner-fimela.png'
                 <CategoryList/>
             </div>
         </section>
-        <!-- <section class="section section--ticker bg-[#FFF9E8] z-1">
+        <section class="section section--news bg-secondary py-14 lg:py-20">
             <Marquee/>
-        </section> -->
-        <section class="section section--news bg-[#FFF9E8] py-14">
             <div class="container">
                 <TitleC 
                 :imgRight="LogoLip6"
-                imgRightClass="h-6"
+                imgRightClass="h-6 lg:h-13"
                 title="Great Deals"
+                titleClass="text-xl"
                 subTitle="Highlight promo & berita hot hari ini jangan sampai ketinggalan!"/>
                 <NewsList :image="News1"/>
             </div>
         </section>
-        <section class="section section--news bg-[#1C1C1E] text-white py-14">
+        <section class="section section--news bg-third text-white py-14 lg:py-20">
             <div class="container">
                 <TitleC 
                 :imgLeft="LogoFimela"
-                imgLeftClass="h-6"
+                imgLeftClass="h-6 lg:h-10"
                 title="Essentials"
+                titleClass="text-xl"
                 subTitle="Highlight promo & berita hot hari ini jangan sampai ketinggalan!"/>
                 <NewsList :image="News2" textColor="text-black"/>
             </div>
         </section>
-        <section class="section section--news bg-[#FFE9C8] py-14">
+        <section class="section section--news bg-fourth py-14 lg:py-20">
             <div class="container">
                 <TitleC 
                 :imgRight="LogoKL"
-                imgRightClass="h-8"
+                imgRightClass="h-8 lg:h-13"
                 title="Koleksi Kalcer"
+                titleClass="text-xl"
                 subTitle="Highlight promo & berita hot hari ini jangan sampai ketinggalan!"/>
                 <NewsList :image="News1"/>
             </div>
         </section>
-        <section class="section section--video bg-[#FFF9E8] pt-12 pb-20">
+        <section class="section section--video bg-secondary py-14 lg:py-20">
             <div class="container">
                 <TitleC 
                 title="Harbolnas Best in Basket"
                 subTitle="Tonton ulasan langsung dari pengguna, biar belanja makin yakin!"
                 titleClass="text-2xl"
+                linkClass="lg:hidden"
                 />
                 <VideoList/>
             </div>
         </section>
-        <section class="section section--product bg-[#FFE9C8] py-16">
+        <section class="section section--product bg-fourth pt-14 pb-30 lg:py-20">
             <div class="container">
                 <TitleC 
                 title="Rekomendasi"
                 titleClass="text-2xl"
+                linkClass="lg:hidden"
                 />
                 <ProductSwiper/>
-                
             </div>
         </section>
-        <section class="section section--pick py-14">
+        <section class="section section--pick py-14 lg:py-20">
             <div class="container">
                 <TitleC 
+                class="section-title--centered"
                 title="Best Pick Today"
+                titleClass="text-2xl"
+                subTitleClass="lg:text-base"
+                linkClass="lg:hidden"
+                subTitle="Supported by"
+                :imgSub="PartnerCompas"
                 />
-                <div class="space-y-10">
-                    <ProductList :image="Product2" title="Male"/>
-                    <ProductList :image="Product3" title="Female"/>
-                    <ProductList :image="Product2" title="Mom + Kids"/>
-                    <ProductList :image="Product3" title="GenZ"/>
+                <div class="section--pick-wrapper space-y-10">
+                    <ProductList :image="Product2" title="Male" subTitle="Pilihan terbaik untuk pria dari gaya kasual hingga outfit premium, lengkap untuk segala aktivitas."/>
+                    <ProductList :image="Product3" title="Female" subTitle="Koleksi fashion dan produk kecantikan yang dirancang khusus untuk wanita modern, percaya diri, dan penuh pesona."/>
+                    <ProductList :image="Product2" title="Mom + Kids" subTitle="Belanja praktis untuk ibu dan si kecil nyaman, stylish, dan pas untuk kebutuhan keluarga."/>
+                    <ProductList :image="Product3" title="GenZ" subTitle="Produk kekinian untuk generasi Z trendi, berani, dan selalu up-to-date dengan gaya terbaru."/>
                 </div>
 
             </div>
         </section>
-        <section class="section section--partner pb-14 border-t-0">
+        <section class="section section--partner pb-14 border-t-0 lg:pb-20">
             <div class="container">
                 <TitleC 
+                class="section-title--centered"
                 title="Official Partner"
+                titleClass="text-2xl"
+                linkClass="lg:hidden"
                 />
-                <div class="flex flex-wrap items-center justify-center gap-3">
-                    <a href="#">
-                        <img :src="PartnerLip6" width="110" height="29" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="PartnerMerdeka" width="86" height="27" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="PartnerKl" width="100" height="29" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="PartnerBolanet" width="110" height="34" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="PartnerOtosia" width="87" height="28" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="PartnerFimela" width="87" height="28" alt="">
-                    </a>
-                    <a href="#">
-                        <img :src="PartnerCompas" width="94" height="33" alt="">
-                    </a>
-                </div>
+                <PartnerList/>
             </div>
         </section>
     </main>
     <FooterC/>
 </template>
 
-<style lang="postcss">
-.section--category{
-    --gridSize: 3.5rem;
-    background-size: var(--gridSize) var(--gridSize);
-    background-image: linear-gradient(to right, color(srgb 1 1 1 / 0.10) 3px, transparent 3px), linear-gradient(to bottom, color(srgb 1 1 1 / 0.10) 3px, transparent 3px);
-}
+<style>
+    @layer components{
+        .section--category{
+            --gridSize: 3.5rem;
+            background-size: var(--gridSize) var(--gridSize);
+            background-image: linear-gradient(to right, color(srgb 1 1 1 / 0.10) 3px, transparent 3px), linear-gradient(to bottom, color(srgb 1 1 1 / 0.10) 3px, transparent 3px);
+        }
+        @media (width >= 64rem) {
+            .section--category{
+                --gridSize: 5.5rem;
+            }
+        }
+    }
+
 </style>
 

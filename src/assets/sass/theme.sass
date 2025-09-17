@@ -1,37 +1,22 @@
 @theme 
-    --color-primary: #584DFC
-    --color-secondary: #E94786
-    --color-third: #FF6600
+    --color-primary: #FF6600
+    --color-secondary: #FFF9E8
+    --color-third: #1C1C1E
+    --color-fourth: #FFE9C8
+    --color-fifth: #E94786
     --font-body: "Bricolage Grotesque", sans-serif
     --font-head: "Dela Gothic One", sans-serif
-    --font-product: "Oswald", sans-serif
+    --font-product: "Anton", sans-serif
 
 @layer components
     img
         object-fit: contain
     .container
-        @apply relative max-w-screen-lg! mx-auto px-6
+        @apply relative max-w-screen-xl! mx-auto px-6 lg:px-4
     .section
         @apply relative border-t-2
     .item
-        &__figure
-            @apply relative rounded-lg overflow-hidden mb-2.5 lg:mb-4
-            &__img
-                @apply w-full
-        &__time
-            @apply flex items-center gap-1 absolute bottom-1.5 right-1.5 rounded p-1.5 text-xs transition-opacity pointer-events-none
-            @apply group-hover:opacity-0
-        &__video
-            @apply absolute inset-0 -m-[5px] w-[calc(100%+10px)] h-[calc(100%+10px)] pointer-events-none
-        &__title
-            @apply font-semibold line-clamp-2 mb-1 text-sm
-        &__detail
-            @apply flex items-center gap-1 lg:gap-2 text-xs
-    .overflow
-        &-y,
-        &-x
-            &-auto
-                scrollbar-width: none
-                -ms-overflow-style: none
-                &::-webkit-scrollbar
-                    display: none
+        &-title
+            @apply block
+        &-figure
+            @apply overflow-hidden

@@ -1,34 +1,37 @@
 <script setup>
     import Logo from '../assets/image/logo.png';
+    import BgLogo from '../assets/image/bg-footer.png';
 </script>
 <template>
-    <footer class="footer bg-[#1C1C1E] text-white">
+    <footer class="footer bg-third text-white">
         <div class="container">
-            <div class="footer-wrapper flex flex-col gap-8 py-12 text-sm">
-                <div class="footer-top flex flex-col gap-3">
-                    <a href="#" class="header-logo flex items-end justify-center mb-2.5">
-                        <img class="header-logo-image" :src="Logo" width="213" height="78" alt="logo">
-                        <!-- <img class="header-logo-date" :src="Date" width="31" height="38" alt="logo"> -->
-                    </a>
-                    <p class="footer-desc text-center">Hadir buat kamu yang doyan cari diskon kece! Dari produk hits, artikel seru, sampai daily deals yang sayang dilewatin - semua ada di sini!</p>
-                </div>
-                <nav class="footer-list grid grid-cols-2 text-center gap-y-1.5">
-                    <a href="#">Tentang Diskonverse</a>
-                    <a href="#">Tentang Kami</a>
-                    <a href="#">Official Partner</a>
-                    <a href="#">Bantuan</a>
-                </nav>
-                <div class="footer-contact text-center">
-                    <div class="footer-contact-item flex flex-col items-center gap-1">
-                        <span class="footer-contact-title font-head">Support:</span>
-                        <span class="footer-contact-detail font-light">support@diskonverse.com</span>
+            <div class="footer-wrapper text-sm text-center md:text-left md:text-base">
+                <div class="footer-inner">
+                    <div class="footer-top">
+                        <a href="#" class="footer-logo">
+                            <img class="footer-logo-image" :src="Logo" width="213" height="78" alt="logo">
+                            <!-- <img class="footer-logo-date" :src="Date" width="31" height="38" alt="logo"> -->
+                        </a>
+                        <p class="footer-desc">Hadir buat kamu yang doyan cari diskon kece! Dari produk hits, artikel seru, sampai daily deals yang sayang dilewatin - semua ada di sini!</p>
                     </div>
-                    <div class="footer-contact-item flex flex-col items-center gap-1">
-                        <span class="footer-contact-title font-head">Partnership:</span>
-                        <span class="footer-contact-detail font-light">partnership@diskonverse.com</span>
+                    <nav class="footer-list md:text-left">
+                        <a href="#">Tentang Diskonverse</a>
+                        <a href="#">Tentang Kami</a>
+                        <a href="#">Official Partner</a>
+                        <a href="#">Bantuan</a>
+                    </nav>
+                    <div class="footer-contact">
+                        <div class="footer-contact-item">
+                            <span class="footer-contact-title font-head md:text-xl">Support:</span>
+                            <span class="footer-contact-detail font-light">support@diskonverse.com</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <span class="footer-contact-title font-head md:text-xl">Partnership:</span>
+                            <span class="footer-contact-detail font-light">partnership@diskonverse.com</span>
+                        </div>
                     </div>
                 </div>
-                <div class="footer-socmed flex items-center justify-center gap-8">
+                <div class="footer-socmed">
                     <a class="footer-socmed-item" href="#">
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 13C24 6.91278 19.072 2 13 2C6.928 2 2 6.91278 2 13C2 18.3373 5.984 22.9744 11 24V16H9V13H11V10C11 7.87168 12.877 6 15 6H17V10H15C14.395 10 14 10.3935 14 11V13H17V16H14V24C19.555 23.4486 24 18.7233 24 13Z" fill="currentColor"/></svg>
                     </a>
@@ -42,8 +45,50 @@
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 15.9995L17 12.9995L11 8.99954V15.9995ZM24 6.99954C24.143 7.50312 23.934 8.1424 24 8.99954C24.077 9.85669 24 11.3567 24 11.9995V12.9995C24 15.346 24.308 16.896 24 17.9995C23.725 18.9638 22.99 19.7317 22 19.9995C21.483 20.1388 20.452 19.9353 19 19.9995C17.57 20.0745 16.21 19.9995 15 19.9995H13C8.39099 19.9995 5.13299 20.2995 3.99999 19.9995C3.00999 19.7317 2.27499 18.9638 1.99999 17.9995C1.85699 17.496 2.06599 16.8567 1.99999 15.9995C1.92299 15.1424 1.99999 13.6424 1.99999 12.9995C1.99999 10.6531 1.69199 8.10312 1.99999 6.99954C2.27499 6.03526 3.00999 5.2674 3.99999 4.99954C4.51699 4.86026 5.54799 5.06383 6.99999 4.99954C8.42999 4.92454 9.78999 4.99954 11 4.99954H13C17.609 4.99954 20.867 4.69954 22 4.99954C22.99 5.2674 23.725 6.03526 24 6.99954Z" fill="currentColor"/></svg>
                     </a>
                 </div>
-                <p class="footer__copyright text-center">Copyright © 2025. Diskonverse. <br class="lg:hidden"> KLY KapanLagi Youniverse. All Rights Reserved</p>
+                <p class="footer__copyright text-xs">Copyright © 2025. Diskonverse. <br class="md:hidden"> KLY KapanLagi Youniverse. All Rights Reserved</p>
             </div>
+            <figure class="absolute right-0 bottom-0 hidden lg:block opacity-10">
+                <img :src="BgLogo" class="w-full h-full object-contain" width="705" height="181" alt="bg-logo">
+            </figure>
         </div>
     </footer>
 </template>
+
+<style>
+    @reference "tailwindcss";
+    @import '../assets/sass/theme.min.css';
+    @layer components{
+        .footer{
+            .footer-wrapper{
+                @apply flex flex-col gap-8 py-12;
+                @apply md:gap-0;
+                .footer-inner{
+                    @apply flex flex-col gap-8;
+                    @apply md:flex-row md:items-start md:justify-between md:mb-20;
+                }
+                .footer-top{
+                    @apply flex flex-col gap-3;
+                    @apply md:w-1/2 md:items-start lg:w-full lg:max-w-lg lg:shrink-0;
+                    .footer-logo{
+                        @apply flex items-end justify-center mb-2.5;
+                    }
+                }
+                .footer-list{
+                    @apply grid grid-cols-2 text-center gap-y-2;
+                    @apply md:grid-cols-1 md:items-start md:gap-y-7;
+                }
+                .footer-contact{
+                    @apply md:flex md:flex-col md:gap-12;
+                    .footer-contact-item{
+                        @apply flex flex-col items-center gap-1;
+                        @apply md:items-start;
+                    }
+                }
+                .footer-socmed{
+                    @apply flex items-center justify-center gap-8;
+                    @apply md:justify-start md:mb-3;
+                }
+            }
+        }
+    }
+</style>

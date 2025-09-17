@@ -80,20 +80,20 @@ window.addEventListener("load", () => {
         
         showDropdown(true);
     }
-    
     function fetchSuggestions() {
         setLoading(true);
-        setTimeout(() => { // simulasi loading
-            fetch('posts.json')
-            .then(res => res.json()) // ambil file JSON lokal
+        setTimeout(() => {
+            fetch('./posts.json')
+            .then(res => res.json())
             .then(data => {
                 allSuggestions = data.map(p => p.title);
-                loading = false;
+                setLoading(false);
                 renderSuggestions(getFilteredSuggestions(input.value));
             })
-            .catch(() => {
+            .catch(err => {
+                console.error('Fetch failed:', err);
                 allSuggestions = [];
-                loading = false;
+                setLoading(false);
                 renderSuggestions([]);
             });
         }, 800);
@@ -102,15 +102,15 @@ window.addEventListener("load", () => {
     function showResult(value) {
         resultSection.innerHTML = `
         <div class="p-4 space-y-2 animate-pulse">
-          <div class="h-4 bg-gray-200 rounded w-3/4"></div>
-          <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div class="h-4 bg-gray-200 rounded w-1/2"></div>
         </div>
-      `;
+    `;
         setTimeout(() => {
             resultSection.innerHTML = `
-          <div class="p-4 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
-            <p><strong>Search result:</strong> ${value}</p>
-          </div>
+            <div class="p-4 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
+                <p><strong>Search result:</strong> ${value}</p>
+            </div>
         `;
         }, 1000);
     }
@@ -146,20 +146,20 @@ window.addEventListener("load", () => {
     });   
     
     
-    let lastScrollTop = 0, lastHeaderPosition = 0;
-    window.addEventListener('scroll', function() {
-        //unsticky header
-        let scrollHeaderTop = window.pageYOffset || document.documentElement.scrollTop,
-        limitHeader = document.querySelector('.header').offsetHeight;
-        if (scrollHeaderTop  > limitHeader){
-            if (scrollHeaderTop  > lastHeaderPosition) {
-                document.querySelector('.header').classList.add('--unsticky')
-            } else {
-                document.querySelector('.header').classList.remove('--unsticky')
-            }
-        }
-        lastHeaderPosition = scrollHeaderTop;
-    })
+    // let lastScrollTop = 0, lastHeaderPosition = 0;
+    // window.addEventListener('scroll', function() {
+    //     //unsticky header
+    //     let scrollHeaderTop = window.pageYOffset || document.documentElement.scrollTop,
+    //     limitHeader = document.querySelector('.header').offsetHeight;
+    //     if (scrollHeaderTop  > limitHeader){
+    //         if (scrollHeaderTop  > lastHeaderPosition) {
+    //             document.querySelector('.header').classList.add('--unsticky')
+    //         } else {
+        //             document.querySelector('.header').classList.remove('--unsticky')
+    //         }
+    //     }
+    //     lastHeaderPosition = scrollHeaderTop;
+    // })
     
     var heroSwiper = new Swiper(".section--hero-swiper", {
         loop: 'true',
@@ -173,6 +173,10 @@ window.addEventListener("load", () => {
     });
     var productImage = new Swiper(".section--product-image", {
         loop: 'true',
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true,
+        },
         autoplay: {
             delay: 5000,
             disableOnInteraction: false,
@@ -180,27 +184,32 @@ window.addEventListener("load", () => {
     });
     var productDesc = new Swiper(".section--product-desc", {
         loop: 'true',
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true,
         },
         navigation: {
             nextEl: ".section--product .swiper-button-next",
             prevEl: ".section--product .swiper-button-prev",
         },
     });
-
+    
     productDesc.controller.control = productImage;
     productImage.controller.control = productDesc;
-
+    
     // video
     let videoTab = document.querySelector('.section--video-box');
     if (videoTab) {
         const mainImg = videoTab.querySelector('.section--video-head .vidio-embed');
         const mainTitle = videoTab.querySelector('.section--video-head .item-title');
-        const items = videoTab.querySelectorAll('.section--video-list > div');
+        const items = videoTab.querySelectorAll('.section--video-list > .item');
         
         items.forEach(item => {
+            if (item.classList.contains('active')) {
+                mainImg.src = item.dataset.src;
+                mainTitle.textContent = item.textContent.trim();
+            };
+            
             item.addEventListener('click', () => {
                 // Update main content
                 mainImg.src = item.dataset.src;
@@ -210,6 +219,164 @@ window.addEventListener("load", () => {
                 items.forEach(el => el.classList.remove('active'));
                 item.classList.add('active');
             });
+        });
+    }
+    
+    let filter = document.getElementById("filterSection");
+    if (filter) {
+        const clearBtn = document.getElementById("clearFilter");
+        const applyBtnMobile = document.getElementById("applyFilterMobile");
+        const products = document.querySelectorAll(".filter-main-product .item");
+        const loadingEl = document.getElementById("loading");
+        const productList = document.getElementById("productList");
+        const noResultEl = document.getElementById("noResult");
+        
+        function getNumberValue(id) {
+            const inputEl = document.getElementById(id);
+            const noticeEl = document.getElementById(id + "Notice");
+            const val = inputEl.value.trim();
+            
+            noticeEl.classList.add("hidden"); // reset dulu
+            
+            if (val === "") return null;
+            
+            const clean = val.replace(/\./g, "").replace(/,/g, "");
+            if (!/^\d+$/.test(clean)) {
+                noticeEl.classList.remove("hidden"); // tampilkan notice
+                return null;
+            }
+            return parseInt(clean, 10);
+        }
+        
+        
+        function getCheckedValues(selector) {
+            let values = [];
+            document.querySelectorAll(selector + ":checked").forEach(el => values.push(el.value));
+            return values;
+        }
+        
+        function applyFilter() {
+            const categories = getCheckedValues(".filter-category");
+            const partners = getCheckedValues(".filter-partner");
+            const minPrice = getNumberValue("minPrice") ?? 0;
+            const maxPrice = getNumberValue("maxPrice") ?? Infinity;
+            
+            productList.style.display = "none";
+            noResultEl.classList.add("hidden");
+            loadingEl.classList.remove("hidden");
+            
+            setTimeout(() => {
+                let visibleCount = 0;
+                
+                products.forEach(p => {
+                    const category = p.dataset.category;
+                    const partner = p.dataset.partner;
+                    const price = parseInt(p.dataset.price);
+                    
+                    const visible =
+                    (categories.length === 0 || categories.includes(category)) &&
+                    (partners.length === 0 || partners.includes(partner)) &&
+                    price >= minPrice && price <= maxPrice;
+                    
+                    if (visible) {
+                        p.style.display = "block";
+                        visibleCount++;
+                    } else {
+                        p.style.display = "none";
+                    }
+                });
+                
+                loadingEl.classList.add("hidden");
+                
+                if (visibleCount === 0) {
+                    noResultEl.classList.remove("hidden");
+                } else {
+                    productList.style.display = "grid";
+                }
+            }, 600);
+        }
+        
+        function clearFilter() {
+            document.querySelectorAll("input[type=checkbox]").forEach(el => el.checked = false);
+            document.getElementById("minPrice").value = "";
+            document.getElementById("maxPrice").value = "";
+            products.forEach(p => p.style.display = "block");
+            noResultEl.classList.add("hidden");
+        }
+        
+        // Desktop: auto filter
+        if (window.innerWidth >= 768) {
+            document.querySelectorAll(".filter-category, .filter-partner").forEach(el => {
+                el.addEventListener("change", applyFilter);
+            });
+            document.getElementById("minPrice").addEventListener("input", applyFilter);
+            document.getElementById("maxPrice").addEventListener("input", applyFilter);
+        }
+        
+        // Mobile: hanya lewat tombol
+        applyBtnMobile.addEventListener("click", applyFilter);
+        
+        clearBtn.addEventListener("click", () => {
+            clearFilter();
+            if (window.innerWidth >= 768) applyFilter();
+        });
+        
+        applyFilter();
+        
+        let asideTrigger = document.querySelector('.filter-aside-trigger')
+        asideTrigger.addEventListener('click', () => {
+            asideTrigger.parentNode.classList.toggle('--open');
+        });
+    }
+    
+    const tabs = document.querySelectorAll(".tabs button");
+    if (tabs) {
+        
+        const contents = document.querySelectorAll(".tabs-content-item");
+        
+        function openTab(tabId, scrollMode = "auto") {
+            contents.forEach(c => c.classList.remove("active"));
+            tabs.forEach(t => t.classList.remove("active"));
+            
+            const targetContent = document.getElementById(tabId);
+            const targetTab = document.querySelector(`[data-tab="${tabId}"]`);
+            
+            if (targetContent) targetContent.classList.add("active");
+            if (targetTab) {
+                targetTab.classList.add("active");
+                
+                // Scroll behavior depending on tab
+                if (scrollMode !== "none") {
+                    if (tabId === "tab2") {
+                        targetTab.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                    } else {
+                        targetTab.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+                    }
+                }
+            }
+        }
+        
+        // On page load
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            openTab(hash, "smooth");
+        } else {
+            openTab("tab1", "none");
+        }
+        
+        // On tab click
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                const tabId = tab.getAttribute("data-tab");
+                openTab(tabId, "smooth");
+                history.replaceState(null, null, "#" + tabId);
+            });
+        });
+        
+        // Handle back/forward navigation
+        window.addEventListener("hashchange", () => {
+            const hash = window.location.hash.substring(1);
+            if (hash) openTab(hash, "smooth");
         });
     }
 })

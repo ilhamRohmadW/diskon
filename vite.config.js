@@ -13,6 +13,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
+        filter: './filter.html',
       },
       output: {
         entryFileNames: 'assets/js/[name].js', // Specify the desired output file name for the main JS file
