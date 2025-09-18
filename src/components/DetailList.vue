@@ -51,7 +51,9 @@
         .section--detail-box{
             @apply grid md:grid-cols-2 gap-7 items-start lg:grid-cols-4;
             .grid-item{
-                @apply md:col-span-2 lg:col-span-4 grid md:grid-cols-2 lg:grid-cols-4 gap-7;
+                &:first-child{
+                    @apply md:col-span-2 lg:col-span-4 grid md:grid-cols-2 lg:grid-cols-4 gap-7;
+                }
             }
             .section--detail-headline{
                 @apply md:col-span-2;
@@ -67,9 +69,7 @@
                 }
             }
             .section--detail-list{
-                @apply flex flex-col gap-7 w-full;
-                @apply md:col-span-2 md:grid md:grid-cols-2;
-                @apply lg:grid lg:grid-cols-2 lg:mx-0 lg:px-0 lg:w-1/2 lg:gap-x-8 md:mx-0 md:px-0 md:w-1/2;
+                @apply flex flex-col gap-7 w-full md:col-span-2 md:grid md:grid-cols-2;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
                 &::-webkit-scrollbar{
