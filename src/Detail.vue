@@ -13,7 +13,7 @@ import News2 from './assets/image/news-2.png'
     <HeaderC/>
     <main class="main flex flex-col overflow-x-hidden">
         <section class="section section--detail">
-            <div class="section--detail-title bg-[#8A82FF] bg-center lg:py-24">
+            <div class="section--detail-title bg-[#8A82FF] bg-center">
                 <TitleC 
                 class="section-title--centered mb-0"
                 title="Pilih Yang Kamu Mau"
@@ -22,7 +22,7 @@ import News2 from './assets/image/news-2.png'
                 />
             </div>
             <div class="tabs">
-                <div class="tabs-nav font-extrabold text-lg lg:text-3xl lg:gap-8">
+                <div class="tabs-nav font-extrabold text-lg">
                     <button class="tabs-btn bg-[#FF934B] active" data-tab="deals">Great Deals</button>
                     <button class="tabs-btn bg-fifth" data-tab="essentials">Fimela Essentials</button>
                     <button class="tabs-btn bg-[#FDB414]" data-tab="kalcer">Koleksi Kalcer</button>
@@ -61,12 +61,12 @@ import News2 from './assets/image/news-2.png'
             --gridSize: 5.5rem;
             background-size: var(--gridSize) var(--gridSize);
             background-image: linear-gradient(to right, rgba(195, 195, 195, 0.1) 3px, transparent 3px), linear-gradient(to bottom, rgba(195, 195, 195, 0.1) 3px, transparent 3px);
-            @apply border-b-4 py-12;
+            @apply border-b-4 py-12 lg:py-24;
         }
         .tabs{
             .tabs-nav{
                 @apply flex overflow-x-auto pb-3 lg:pb-4 gap-4 px-6 whitespace-nowrap -mt-6 -mb-9 lg:-mt-7 lg:-mb-11;
-                @apply sm:justify-center;
+                @apply sm:justify-center lg:text-3xl lg:gap-8;
                 scrollbar-width: none;
                 -ms-overflow-style: none;
                 &::-webkit-scrollbar{

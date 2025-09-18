@@ -390,55 +390,90 @@ window.addEventListener("load", () => {
             asideTrigger.parentNode.classList.toggle('--open');
         });
     }
-    
+
     const tabs = document.querySelectorAll(".tabs button");
-    if (tabs) {
-        
+    const tabsContainer = document.querySelector(".tabs-nav"); // parent container (scrollable)
+    if (tabs.length > 0 && tabsContainer) {
         const contents = document.querySelectorAll(".tabs-content-item");
-        
+
         function openTab(tabId, scrollMode = "auto") {
             contents.forEach(c => c.classList.remove("active"));
             tabs.forEach(t => t.classList.remove("active"));
-            
+
             const targetContent = document.getElementById(tabId);
             const targetTab = document.querySelector(`[data-tab="${tabId}"]`);
-            
-            if (targetContent) targetContent.classList.add("active");
-            if (targetTab) {
+
+            if (targetContent && targetTab) {
+                targetContent.classList.add("active");
                 targetTab.classList.add("active");
-                
-                // Scroll behavior depending on tab
+
                 if (scrollMode !== "none") {
-                    if (tabId === "tab2") {
+                    const index = Array.from(tabs).indexOf(targetTab);
+
+                    if (index > 0 && index < tabs.length - 1) {
+                        // middle tabs → center
                         targetTab.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
                     } else {
-                        targetTab.scrollIntoView({ behavior: "smooth", inline: "nearest", block: "nearest" });
+                        // first or last → manual offset so it doesn't hug the edge
+                        const containerRect = tabsContainer.getBoundingClientRect();
+                        const tabRect = targetTab.getBoundingClientRect();
+
+                        const styles = window.getComputedStyle(tabsContainer);
+                        const offset = parseInt(styles.paddingLeft) || 0;
+                        const scrollLeft =
+                            tabsContainer.scrollLeft + (tabRect.left - containerRect.left) - offset;
+
+                        tabsContainer.scrollTo({
+                            left: scrollLeft,
+                            behavior: "smooth"
+                        });
                     }
                 }
+            } else {
+                // fallback → first tab
+                const firstTab = tabs[0];
+                const firstTabId = firstTab.getAttribute("data-tab");
+                openTab(firstTabId, scrollMode);
+                history.replaceState(null, null, "#" + firstTabId);
             }
         }
-        
-        // On page load
-        const hash = window.location.hash.substring(1);
-        if (hash) {
-            openTab(hash, "smooth");
-        // } else {
-        //     openTab("tab1", "none");
+
+        function getValidHash() {
+            const hash = window.location.hash.substring(1);
+            const target = document.getElementById(hash);
+            return target ? hash : null;
         }
-        
+
+        // On page load
+        const initialHash = getValidHash();
+        if (initialHash) {
+            openTab(initialHash, "smooth");
+        } else {
+            const firstTabId = tabs[0].getAttribute("data-tab");
+            openTab(firstTabId, "none");
+            history.replaceState(null, null, "#" + firstTabId);
+        }
+
         // On tab click
         tabs.forEach(tab => {
-            tab.addEventListener("click", () => {
+            tab.addEventListener("click", e => {
+                e.preventDefault();
                 const tabId = tab.getAttribute("data-tab");
                 openTab(tabId, "smooth");
                 history.replaceState(null, null, "#" + tabId);
             });
         });
-        
-        // Handle back/forward navigation
+
+        // On hash change
         window.addEventListener("hashchange", () => {
-            const hash = window.location.hash.substring(1);
-            if (hash) openTab(hash, "smooth");
+            const validHash = getValidHash();
+            if (validHash) {
+                openTab(validHash, "smooth");
+            } else {
+                const firstTabId = tabs[0].getAttribute("data-tab");
+                openTab(firstTabId, "smooth");
+                history.replaceState(null, null, "#" + firstTabId);
+            }
         });
     }
 })
