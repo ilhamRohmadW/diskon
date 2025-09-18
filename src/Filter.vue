@@ -114,7 +114,7 @@ import Product3 from './assets/image/product-3.png'
                         <!-- Grid Produk -->
                         <div id="productList" class="filter-main-product">
                             
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -133,9 +133,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Female"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -154,9 +154,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Genz"
                                 data-partner="Seller"
                                 data-price="15000">
@@ -175,9 +175,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -196,9 +196,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mom&Kids"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -217,9 +217,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Genz"
                                 data-partner="Seller"
                                 data-price="15000">
@@ -238,9 +238,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -259,9 +259,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mom&Kids"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -280,9 +280,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Genz"
                                 data-partner="Seller"
                                 data-price="15000">
@@ -301,9 +301,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                             
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -322,9 +322,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Female"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -343,9 +343,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Genz"
                                 data-partner="Seller"
                                 data-price="15000">
@@ -364,9 +364,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -385,9 +385,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Female"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -406,9 +406,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Genz"
                                 data-partner="Seller"
                                 data-price="15000">
@@ -427,9 +427,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                             
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -448,9 +448,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Female"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -469,9 +469,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Genz"
                                 data-partner="Seller"
                                 data-price="15000">
@@ -490,9 +490,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Mens"
                                 data-partner="Official"
                                 data-price="15000000">
@@ -511,9 +511,9 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
-                            <div class="item"
+                            <a href="#" class="item group hover:shadow-(--item-shadow)"
                                 data-category="Female"
                                 data-partner="Seller"
                                 data-price="75000">
@@ -532,7 +532,7 @@ import Product3 from './assets/image/product-3.png'
                                         <span class="item-price-discount bg-primary/50 text-white lg:text-xs">save up to 50%</span>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         
 
                         </div>

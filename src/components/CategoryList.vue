@@ -37,7 +37,7 @@ var category = ref([
 <template>
     <div class="section--category-list">
         <template v-for="item in category">
-            <a :href="item.link" class="item bg-white shadow-[0px_0px_0px_0px_black] hover:shadow-[6px_6px_0px_0px_black]">
+            <a :href="item.link" class="item group bg-white hover:shadow-(--item-shadow)">
                 <figure class="item-image">
                     <img class="h-full w-full object-contain" :src="item.image" :alt="item.alt">
                 </figure>
@@ -53,7 +53,7 @@ var category = ref([
 
     @layer components{
         .section--category-list{
-            @apply flex items-center gap-1.5 overflow-x-auto -mx-6 px-6 snap-x snap-mandatory scroll-smooth;
+            @apply flex items-center gap-1.5 overflow-x-auto -mx-6 px-6 snap-x snap-mandatory scroll-smooth pb-1.5;
             @apply md:justify-between lg:overflow-visible;
             @apply lg:justify-center lg:gap-20 lg:overflow-visible;
             scrollbar-width: none;

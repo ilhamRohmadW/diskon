@@ -23,24 +23,24 @@ import News2 from './assets/image/news-2.png'
             </div>
             <div class="tabs">
                 <div class="tabs-nav font-extrabold text-lg lg:text-3xl lg:gap-8">
-                    <button class="tabs-btn bg-[#FF934B] active" data-tab="tab1">Great Deals</button>
-                    <button class="tabs-btn bg-fifth" data-tab="tab2">Fimela Essentials</button>
-                    <button class="tabs-btn bg-[#FDB414]" data-tab="tab3">Koleksi Kalcer</button>
+                    <button class="tabs-btn bg-[#FF934B] active" data-tab="deals">Great Deals</button>
+                    <button class="tabs-btn bg-fifth" data-tab="essentials">Fimela Essentials</button>
+                    <button class="tabs-btn bg-[#FDB414]" data-tab="kalcer">Koleksi Kalcer</button>
                 </div>
                 <div class="tabs-content">
-                    <div id="tab1" class="tabs-content-item bg-[#FFF9E8] active">
+                    <div id="deals" class="tabs-content-item bg-[#FFF9E8] active">
                         <div class="container">
                             <DetailList :image="News1"/>
                             <Pagination/>
                         </div>
                     </div>
-                    <div id="tab2" class="tabs-content-item bg-[#FFE2ED]">
+                    <div id="essentials" class="tabs-content-item bg-[#FFE2ED]">
                         <div class="container">
                             <DetailList :image="News2"/>
                             <Pagination/>
                         </div>
                     </div>
-                    <div id="tab3" class="tabs-content-item bg-[#FFE9C8]">
+                    <div id="kalcer" class="tabs-content-item bg-[#FFE9C8]">
                         <div class="container">
                             <DetailList :image="News2"/>
                             <Pagination/>

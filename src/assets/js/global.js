@@ -8,6 +8,14 @@ window.addEventListener("load", () => {
     let PhIndex = 0;
     let PhInterval;
 
+    const placeholders = [
+        "Samsung Galaxy A14",
+        "Iphone 14 Pro Max",
+        "Macbook Air M2",
+        "Lipstick Merah",
+        "Parfum Wanita",
+    ];
+
     let allSuggestions = [];
     let recent = [];
     let loading = false;
@@ -21,7 +29,7 @@ window.addEventListener("load", () => {
         if (isLoading) {
             dropdown.innerHTML = `
                 <div class="flex justify-center items-center p-4">
-                    <div class="w-6 h-6 border-2 border-t-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                    <div class="w-6 h-6 border-2 border-t-2 border-gray-300 border-t-primary rounded-full animate-spin"></div>
                 </div>
             `;
             showDropdown(true);
@@ -65,6 +73,7 @@ window.addEventListener("load", () => {
                 addToRecent(s);
                 showDropdown(false);
                 showResult(s);
+                hideRotation();
             };
             ul.appendChild(li);
         });
@@ -127,31 +136,37 @@ window.addEventListener("load", () => {
         }
         
         stopRotation();
-        PhSearch.textContent = "Cari Produk...";
-        PhSearch.style.opacity = 1;
+        if (input.value.length <= 0 ) {
+            PhSearch.textContent = "Cari Product...";
+            showRotation();
+        }
     });
     
     input.addEventListener('input', () => {
         renderSuggestions(getFilteredSuggestions(input.value));
+        hideRotation();
     });
-    
-    const placeholders = [
-        "Samsung Galaxy A14",
-        "Iphone 14 Pro Max",
-        "Macbook Air M2",
-        "Lipstick Merah",
-        "Parfum Wanita",
-    ];
     
     function startRotation() {
         PhInterval = setInterval(() => {
-            PhSearch.style.opacity = 0; // fade out
+            
+            hideRotation();
             setTimeout(() => {
                 PhIndex = (PhIndex + 1) % placeholders.length;
                 PhSearch.textContent = placeholders[PhIndex];
-                PhSearch.style.opacity = 1; // fade in
+                showRotation();
             }, 500);
         }, 2000);
+    }
+
+    function hideRotation() {
+        PhSearch.classList.add('transition-none!')
+        PhSearch.style.opacity = 0; // fade out
+    }
+    
+    function showRotation() {
+        PhSearch.classList.remove('transition-none!')
+        PhSearch.style.opacity = 1; // fade in
     }
     
     function stopRotation() {
@@ -161,10 +176,17 @@ window.addEventListener("load", () => {
     startRotation();
     
     input.addEventListener("blur", () => {
-        startRotation();
+        setTimeout(() => {
+            if (input.value.length == 0 ) {
+                startRotation();
+                showRotation();
+            }else{
+                hideRotation();
+            }
+        }, 100);
     });
     
-    input.addEventListener('keydown', e => {
+    input.addEventListener('keyup', e => {
         if (e.key === 'Enter') {
             e.preventDefault();
             const value = input.value.trim();
@@ -173,6 +195,9 @@ window.addEventListener("load", () => {
                 showDropdown(false);
                 showResult(value);
             }
+        }
+        if (input.value.length <= 0) {
+            showRotation();
         }
     });
     
@@ -397,8 +422,8 @@ window.addEventListener("load", () => {
         const hash = window.location.hash.substring(1);
         if (hash) {
             openTab(hash, "smooth");
-        } else {
-            openTab("tab1", "none");
+        // } else {
+        //     openTab("tab1", "none");
         }
         
         // On tab click

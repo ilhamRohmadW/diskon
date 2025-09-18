@@ -49,7 +49,10 @@ import PartnerCompas from './assets/image/partner-compas.png'
                 title="Great Deals"
                 titleClass="text-xl"
                 subTitle="Highlight promo & berita hot hari ini jangan sampai ketinggalan!"/>
-                <NewsList :image="News1"/>
+                <NewsList 
+                :image="News1"
+                listTextColor="text-black/50"
+                />
             </div>
         </section>
         <section class="section section--news bg-third text-white py-14 lg:py-20">
@@ -60,7 +63,11 @@ import PartnerCompas from './assets/image/partner-compas.png'
                 title="Essentials"
                 titleClass="text-xl"
                 subTitle="Highlight promo & berita hot hari ini jangan sampai ketinggalan!"/>
-                <NewsList :image="News2" textColor="text-black"/>
+                <NewsList 
+                :image="News2"
+                textColor="text-black"
+                listTextColor="text-white/50"
+                />
             </div>
         </section>
         <section class="section section--news bg-fourth py-14 lg:py-20">
@@ -71,7 +78,10 @@ import PartnerCompas from './assets/image/partner-compas.png'
                 title="Koleksi Kalcer"
                 titleClass="text-xl"
                 subTitle="Highlight promo & berita hot hari ini jangan sampai ketinggalan!"/>
-                <NewsList :image="News1"/>
+                <NewsList 
+                :image="News1"
+                listTextColor="text-black/50"
+                />
             </div>
         </section>
         <section class="section section--video bg-secondary py-14 lg:py-20">

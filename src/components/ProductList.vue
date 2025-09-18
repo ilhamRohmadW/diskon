@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="section--pick-list">
-            <a v-for="n in 5" :key="n" href="#" class="item">
+            <a v-for="n in 5" :key="n" href="#" class="item group hover:shadow-(--item-shadow)">
                 <figure class="item-figure aspect-[4/3] bg-gray-100">
                     <img :src="image" class="w-full h-full object-contain" alt="">
                 </figure>
@@ -62,8 +62,8 @@
             }
         }
         .section--pick-list{
-            @apply overflow-x-auto -mx-6 px-6 flex items-start gap-3 snap-x snap-mandatory scroll-smooth;
-            @apply lg:grid lg:grid-cols-5 lg:gap-6 lg:mx-0 lg:px-0;
+            @apply overflow-x-auto -mx-6 px-6 flex items-start gap-3 snap-x snap-mandatory scroll-smooth pb-1.5;
+            @apply lg:grid lg:grid-cols-5 lg:gap-6 lg:mx-0 lg:px-0 lg:overflow-visible;
             scrollbar-width: none;
             -ms-overflow-style: none;
             &::-webkit-scrollbar{

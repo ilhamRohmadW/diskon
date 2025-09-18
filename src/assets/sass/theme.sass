@@ -7,6 +7,8 @@
     --font-body: "Bricolage Grotesque", sans-serif
     --font-head: "Dela Gothic One", sans-serif
     --font-product: "Anton", sans-serif
+    --item-shadow-unhover: 0px 0px 0px 0px #000000
+    --item-shadow: 6px 6px 0px 0px #000000
 
 @layer components
     img
@@ -16,7 +18,8 @@
     .section
         @apply relative border-t-2
     .item
+        @apply transition-shadow shadow-(--item-shadow-unhover)
         &-title
             @apply block
         &-figure
-            @apply overflow-hidden
+            @apply overflow-hidden transition-shadow shadow-(--item-shadow-unhover)

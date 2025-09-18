@@ -19,24 +19,24 @@ import Video3 from '../assets/image/video-3.png'
             </div>
         </div>
         <div class="section--video-list">
-            <div class="item active" data-src="https://www.vidio.com/embed/8015558/?autoplay=true&player_only=true&mute=false">
-                <figure class="item-figure aspect-video">
+            <div class="item group active" data-src="https://www.vidio.com/embed/8015558/?autoplay=true&player_only=true&mute=false">
+                <figure class="item-figure aspect-video group-hover:shadow-(--item-shadow)">
                     <img :src="Video1" class="w-full h-full object-cover" alt="">
                 </figure>
                 <div class="item-detail">
                     <span class="item-title text-sm font-bold line-clamp-4 lg:text-xl">Panggung Megah Konser D'Academy 7 Siap Digelar! Audisi Online</span>
                 </div>
             </div>
-            <div class="item" data-src="https://www.vidio.com/embed/1550718/?autoplay=true&player_only=true&mute=false">
-                <figure class="item-figure aspect-video">
+            <div class="item group" data-src="https://www.vidio.com/embed/1550718/?autoplay=true&player_only=true&mute=false">
+                <figure class="item-figure aspect-video group-hover:shadow-(--item-shadow)">
                     <img :src="Video2" class="w-full h-full object-cover" alt="">
                 </figure>
                 <div class="item-detail">
                     <span class="item-title text-sm font-bold line-clamp-4 lg:text-xl">Intip tren outfit kece yang lagi rame di FYP, gampang ditiru buat gaya sehari-hari.</span>
                 </div>
             </div>
-            <div class="item" data-src="https://www.vidio.com/embed/2234894/?autoplay=true&player_only=true&mute=false">
-                <figure class="item-figure aspect-video">
+            <div class="item group" data-src="https://www.vidio.com/embed/2234894/?autoplay=true&player_only=true&mute=false">
+                <figure class="item-figure aspect-video group-hover:shadow-(--item-shadow)">
                     <img :src="Video3" class="w-full h-full object-cover" alt="">
                 </figure>
                 <div class="item-detail">
